@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentInputBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -42,7 +43,7 @@ class InputFragment : Fragment() {
                         _binding.phoneNum.text.toString()
                     )
                 )
-                Toast.makeText(requireContext(),"success", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_inputFragment_to_workerFragment)
             } else{
                 Toast.makeText(requireContext(),"Please Add The Required Info", Toast.LENGTH_LONG).show()
             }
