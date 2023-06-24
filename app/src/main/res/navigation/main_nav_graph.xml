@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_workerFragment_to_WDetailsFragment"
             app:destination="@id/WDetailsFragment" />
+        <action
+            android:id="@+id/action_workerFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
     <fragment
         android:id="@+id/WDetailsFragment"
@@ -43,4 +46,9 @@
             app:argType="com.fyc.android.hrapp.Worker" />
 
     </fragment>
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.fyc.android.hrapp.CalendarFragment"
+        android:label="CalendarFragment"
+        tools:layout="@layout/fragment_calendar"/>
 </navigation>

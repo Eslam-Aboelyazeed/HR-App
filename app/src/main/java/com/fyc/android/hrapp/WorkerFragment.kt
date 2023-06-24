@@ -48,6 +48,10 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
             findNavController().navigate(R.id.action_workerFragment_to_inputFragment)
         }
 
+        _binding.cFab.setOnClickListener {
+            findNavController().navigate(R.id.action_workerFragment_to_calendarFragment)
+        }
+
         getLiveUpdates()
 
 
