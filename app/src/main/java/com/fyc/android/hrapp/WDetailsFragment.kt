@@ -1,17 +1,31 @@
 package com.fyc.android.hrapp
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentWDetailsBinding
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class WDetailsFragment : Fragment() {
 
+    private val workerCollectionRef = Firebase.firestore.collection("workers")
+
     private lateinit var _binding: FragmentWDetailsBinding
+
+    private lateinit var worker: Worker
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -22,14 +36,144 @@ class WDetailsFragment : Fragment() {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_w_details, container, false)
 
-        val worker = arguments?.let { WDetailsFragmentArgs.fromBundle(it).workersList }
+        _binding.wFName.isFocusable= false
+        _binding.wLName.isFocusable = false
+        _binding.wDob.isFocusable = false
+        _binding.wPn.isFocusable = false
+        _binding.wSalary.isFocusable= false
 
-        _binding.wName.text = worker?.fName + " " + worker?.lName
-        _binding.wDob.text = worker?.dOB
-        _binding.wPn.text = worker?.pNumber
-        _binding.wSalary.text = worker?.salary
+        worker = arguments?.let { WDetailsFragmentArgs.fromBundle(it).workersList }!!
+
+        _binding.wFName.setText(worker?.fName)
+        _binding.wLName.setText(worker?.lName)
+        _binding.wDob.setText(worker?.dOB)
+        _binding.wPn.setText(worker?.pNumber)
+        _binding.wSalary.setText(worker?.salary)
+
+        setHasOptionsMenu(true)
+
+        _binding.applyEditFab.setOnClickListener {
+            val editedWorker = getEditedWorker()
+            if (worker != null) {
+                updateWorker(worker, editedWorker)
+            }
+            _binding.wFName.isFocusable= false
+            _binding.wLName.isFocusable = false
+            _binding.wDob.isFocusable = false
+            _binding.wPn.isFocusable = false
+            _binding.wSalary.isFocusable= false
+            _binding.applyEditFab.isClickable = false
+            _binding.applyEditFab.visibility = View.INVISIBLE
+        }
 
         return _binding.root
+    }
+
+    fun getEditedWorker(): Map<String, Any> {
+        val fName = _binding.wFName.text.toString()
+        val lName = _binding.wLName.text.toString()
+        val dOB = _binding.wDob.text.toString()
+        val salary = _binding.wSalary.text.toString()
+        val pNumber = _binding.wPn.text.toString()
+        val map = mutableMapOf<String, Any>()
+        if (fName.isNotEmpty()) {
+            map["fname"] = fName
+        }
+        if (lName.isNotEmpty()) {
+            map["lname"] = lName
+        }
+        if (dOB.isNotEmpty()) {
+            map["dob"] = dOB
+        }
+        if (salary.isNotEmpty()) {
+            map["salary"] = salary
+        }
+        if (pNumber.isNotEmpty()) {
+            map["pnumber"] = pNumber
+        }
+        return map
+    }
+
+    fun updateWorker(worker: Worker, newWorkerMap: Map<String, Any>) = CoroutineScope(Dispatchers.IO).launch {
+        val workerQuery = workerCollectionRef
+            .whereEqualTo("fname", worker.fName)
+            .whereEqualTo("lname", worker.lName)
+            .whereEqualTo("dob", worker.dOB)
+            .whereEqualTo("salary", worker.salary)
+            .whereEqualTo("pnumber", worker.pNumber)
+            .get()
+            .await()
+        if (workerQuery.documents.isNotEmpty()){
+            for (document in workerQuery){
+                try {
+                    workerCollectionRef.document(document.id).set(
+                        newWorkerMap, SetOptions.merge()
+                    ).await()
+
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+        } else {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun deleteWorker(worker: Worker) = CoroutineScope(Dispatchers.IO).launch {
+        val workerQuery = workerCollectionRef
+            .whereEqualTo("fname", worker.fName)
+            .whereEqualTo("lname", worker.lName)
+            .whereEqualTo("dob", worker.dOB)
+            .whereEqualTo("salary", worker.salary)
+            .whereEqualTo("pnumber", worker.pNumber)
+            .get()
+            .await()
+        if (workerQuery.documents.isNotEmpty()){
+            for (document in workerQuery){
+                try {
+                    workerCollectionRef.document(document.id).delete().await()
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        //Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+        } else {
+            withContext(Dispatchers.Main) {
+                //Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
+
+        inflater.inflate(R.menu.overflow_menu, menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.delete_worker -> {deleteWorker(worker);
+                                   findNavController().navigate(R.id.action_WDetailsFragment_to_workerFragment)}
+            R.id.edit_worker -> {_binding.wFName.isFocusableInTouchMode = true;
+                                 _binding.wLName.isFocusableInTouchMode = true;
+                                 _binding.wDob.isFocusableInTouchMode = true;
+                                 _binding.wPn.isFocusableInTouchMode = true;
+                                 _binding.wSalary.isFocusableInTouchMode= true;
+                                 _binding.applyEditFab.isClickable = true;
+                                 _binding.applyEditFab.visibility = View.VISIBLE}
+        }
+
+        return true
     }
 
 }

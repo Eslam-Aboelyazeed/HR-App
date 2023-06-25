@@ -10,20 +10,34 @@
         android:background="@color/white">
 
 
-        <TextView
-            android:id="@+id/w_name"
+        <EditText
+            android:id="@+id/w_fName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
+            android:layout_marginTop="132dp"
+            android:layout_marginEnd="28dp"
+            android:inputType="text"
             android:textColor="@color/black"
             android:textSize="80sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
+            android:id="@+id/w_lName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="132dp"
+            android:inputType="text"
+            android:textColor="@color/black"
+            android:textSize="80sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/w_fName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
             android:id="@+id/w_dob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,10 +46,11 @@
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_name" />
+            app:layout_constraintTop_toBottomOf="@+id/w_fName"
+            android:inputType="date"/>
 
 
-        <TextView
+        <EditText
             android:id="@+id/w_pn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,9 +59,10 @@
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_dob" />
+            app:layout_constraintTop_toBottomOf="@+id/w_dob"
+            android:inputType="phone"/>
 
-        <TextView
+        <EditText
             android:id="@+id/w_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +71,22 @@
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_pn" />
+            app:layout_constraintTop_toBottomOf="@+id/w_pn"
+            android:inputType="number"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/apply_edit_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.946"
+            app:srcCompat="@drawable/ic_check"
+            android:visibility="invisible"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
