@@ -50,5 +50,23 @@
         android:id="@+id/calendarFragment"
         android:name="com.fyc.android.hrapp.CalendarFragment"
         android:label="CalendarFragment"
-        tools:layout="@layout/fragment_calendar"/>
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendarFragment_to_attendanceFragment"
+            app:destination="@id/attendanceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attendanceFragment"
+        android:name="com.fyc.android.hrapp.AttendanceFragment"
+        android:label="AttendanceFragment"
+        tools:layout="@layout/fragment_attendance">
+        <action
+            android:id="@+id/action_attendanceFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment"
+            app:popUpTo="@id/attendanceFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="the_day"
+            app:argType="string" />
+    </fragment>
 </navigation>

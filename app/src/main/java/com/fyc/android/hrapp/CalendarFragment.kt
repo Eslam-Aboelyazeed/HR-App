@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentCalendarBinding
@@ -129,7 +130,8 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
 
     override fun onDayClick(day: String, position: Int) {
         if (day != ""){
-            Toast.makeText(requireContext(), "Selected Date  $day  ${monthYearFromDate(selectedDate)}", Toast.LENGTH_LONG).show()
+//            Toast.makeText(requireContext(), "Selected Date  $day  ${monthYearFromDate(selectedDate)}", Toast.LENGTH_LONG).show()
+            findNavController().navigate(CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment("$day  ${monthYearFromDate(selectedDate)}"))
         }
     }
 
