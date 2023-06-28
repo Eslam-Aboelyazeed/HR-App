@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentAttendanceBinding
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -27,11 +28,11 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
 
     private lateinit var _binding: FragmentAttendanceBinding
 
-    private lateinit var allWList: Workers
+    private lateinit var allWList: ArrayList<Worker>
 
     private lateinit var attendedWList: Workers
 
-    private lateinit var wList: Workers
+    private lateinit var wList: ArrayList<Worker>
 
     private lateinit var day: String
 
@@ -57,15 +58,21 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
 
         RV.setHasFixedSize(true)
 
-        allWList = Workers()
+        allWList = arrayListOf()
 
-        attendedWList = Workers()
+//        attendedWList = Workers()
+
+        wList = arrayListOf()
+
+        wList.clear()
 
         setHasOptionsMenu(true)
 
         getLiveUpdates()
 
-        RV.adapter = WRV(this, attendedWList)
+        getLiveUpdatesForWorkers()
+
+//        RV.adapter = WRV(this, attendedWList)
 
         _binding.applyEditFab.setOnClickListener {
             _binding.applyEditFab.isClickable = false
@@ -74,14 +81,20 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
             _binding.addedFab.visibility = View.VISIBLE
             _binding.addedFab.isClickable = true
 
-            RV.adapter = WRV(this, attendedWList)
+//            saveAttendance(WAttendance(day, wList))
+
+            updateWorkerAttendance(getEditedWorkerAttendance())
+
+            getLiveUpdatesForWorkers()
+
+//            RV.adapter = WRV(this, attendedWList)
         }
 
         _binding.addedFab.setOnClickListener {
-            val map: Map<String, ArrayList<Worker>>
-            map = mutableMapOf()
-            map[day] = attendedWList
-            saveAttendance(map)
+//            val map: Map<String, ArrayList<Worker>>
+//            map = mutableMapOf()
+//            map[day] = attendedWList
+//            saveAttendance(WAttendance(day, wList))
             findNavController().navigate(R.id.action_attendanceFragment_to_calendarFragment)
         }
 
@@ -89,16 +102,78 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
         return _binding.root
     }
 
-    private fun saveAttendance(map: Map<String, ArrayList<Worker>>) = CoroutineScope(Dispatchers.IO).launch {
+    private fun saveAttendance(wAttendance: WAttendance) = CoroutineScope(Dispatchers.IO).launch {
 
         try {
-            dayCollectionRef.add(map).await()
+            dayCollectionRef.add(wAttendance).await()
             withContext(Dispatchers.Main) {
 //                Toast.makeText(requireContext(),"Successfully Added The Meal",Toast.LENGTH_LONG).show()
             }
         } catch (e:Exception){
             withContext(Dispatchers.Main) {
 //                Toast.makeText(requireContext(),e.message,Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun getEditedWorkerAttendance(): Map<String, Any> {
+        val map = mutableMapOf<String, Any>()
+        if(day.isNotEmpty()) {
+            map["day"] = day
+        }
+        if (wList.isNotEmpty()) {
+            map["workers"] = wList
+        }
+
+        return map
+    }
+
+    fun updateWorkerAttendance(newWorkerMap: Map<String, Any>) = CoroutineScope(Dispatchers.IO).launch {
+        val workerQuery = dayCollectionRef
+            .whereEqualTo("day", day)
+            .get()
+            .await()
+        if (workerQuery.documents.isNotEmpty()){
+            for (document in workerQuery){
+                try {
+                    dayCollectionRef.document(document.id).set(
+                        newWorkerMap, SetOptions.merge()
+                    ).await()
+
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+//                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+        } else {
+            withContext(Dispatchers.Main) {
+//                Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+                saveAttendance(WAttendance(day, wList))
+            }
+        }
+    }
+
+    fun deleteWorkerAttendance() = CoroutineScope(Dispatchers.IO).launch {
+        val workerQuery = dayCollectionRef
+            .whereEqualTo("day", day)
+            .get()
+            .await()
+        if (workerQuery.documents.isNotEmpty()){
+            for (document in workerQuery){
+                try {
+                    dayCollectionRef.document(document.id).delete().await()
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        //Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+        } else {
+            withContext(Dispatchers.Main) {
+                //Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -136,9 +211,12 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
 
             querySnapshot?.let {
                 for (document in it){
-                    val worker = document.toObject<Worker>()
-                    wList.add(worker)
-                    RV.adapter = WRV(this, wList)
+                    val wAttendance = document.toObject<WAttendance>()
+                    if (wAttendance.day == day) {
+                        wList = wAttendance.workers
+                        RV.adapter = WRV(this, wList)
+                    }
+
                 }
 
             }
@@ -155,7 +233,8 @@ class AttendanceFragment : Fragment(), WRV.onClickListener, ARV.onClickListener 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.edit_worker -> { RV.adapter = ARV(this, allWList, attendedWList)
+            R.id.delete_worker -> { deleteWorkerAttendance(); getLiveUpdatesForWorkers()}
+            R.id.edit_worker -> { RV.adapter = ARV(this, allWList, wList)
                                   _binding.applyEditFab.isClickable = true;
                                   _binding.applyEditFab.visibility = View.VISIBLE;
                                   _binding.addedFab.isClickable = false;

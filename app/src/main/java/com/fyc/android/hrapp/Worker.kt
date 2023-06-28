@@ -14,3 +14,9 @@ data class Worker(
 
 @Parcelize
 class Workers: ArrayList<Worker>(), Parcelable
+
+@Parcelize
+data class WAttendance(
+                        var day: String = "",
+                        var workers: ArrayList<Worker> = arrayListOf()
+): Parcelable
