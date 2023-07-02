@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class ARV(val clickListener: onClickListener, val workerList: ArrayList<Worker>, val attendedWorkerList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
+class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {
@@ -24,26 +25,49 @@ class ARV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RVViewHolder, position: Int) {
 
-        val currentWorker = workerList[position]
+//        for (worker in workerList) {
+//            aWorkerList.add(AttendedWorker(worker.fName,worker.lName,worker.dOB,worker.salary,
+//                worker.pNumber,worker.country,worker.city,worker.gender,worker.nationality,
+//                worker.nationalId,worker.hireDate,0,0,worker.department))
+//        }
+
+        val currentWorker = aWorkerList[position]
 
         holder.name.text = currentWorker.fName + " " + currentWorker.lName
 
-        holder.name.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.arrivalTime.text = "Arrival Time: " + currentWorker.aTime
 
-            if (isChecked){
+        holder.leaveTime.text = "Leave Time: " + currentWorker.lTime
 
-                attendedWorkerList.add(currentWorker)
 
-            } else {
+//        fun makeItFocusable() {
+//            holder.attendTime.isFocusableInTouchMode = true
+//            holder.leaveTime.isFocusableInTouchMode = true
+//        }
+//
+//        fun makeItUnFocusable() {
+//            holder.attendTime.isFocusable = false
+//            holder.leaveTime.isFocusable = false
+//        }
 
-                attendedWorkerList.remove(currentWorker)
 
-            }
-        }
+
+//        holder.name.setOnCheckedChangeListener { buttonView, isChecked ->
+//
+//            if (isChecked){
+//
+//                attendedWorkerList.add(currentWorker)
+//
+//            } else {
+//
+//                attendedWorkerList.remove(currentWorker)
+//
+//            }
+//        }
     }
 
     override fun getItemCount(): Int {
-        return workerList.size
+        return aWorkerList.size
     }
 
     interface onClickListener {
@@ -54,11 +78,17 @@ class ARV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
         View.OnClickListener{
 
 
-        val name : CheckBox = itemView.findViewById(R.id.attended_w_name)
+        val name : TextView = itemView.findViewById(R.id.attended_w_name)
+
+        val arrivalTime : TextView = itemView.findViewById(R.id.arrival_time)
+
+        val leaveTime : TextView= itemView.findViewById(R.id.leave_time)
 
         val workerItem : ConstraintLayout= itemView.findViewById(R.id.w_attendance_item)
 
+
         init {
+
             workerItem.setOnClickListener(this)
 
         }

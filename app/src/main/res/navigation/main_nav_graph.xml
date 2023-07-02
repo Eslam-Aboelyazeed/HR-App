@@ -68,5 +68,25 @@
         <argument
             android:name="the_day"
             app:argType="string" />
+        <action
+            android:id="@+id/action_attendanceFragment_to_ADetailsFragment"
+            app:destination="@id/ADetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ADetailsFragment"
+        android:name="com.fyc.android.hrapp.ADetailsFragment"
+        android:label="ADetailsFragment"
+        tools:layout="@layout/fragment_a_details">
+        <argument
+            android:name="worker"
+            app:argType="com.fyc.android.hrapp.Worker" />
+        <argument
+            android:name="day"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_ADetailsFragment_to_attendanceFragment"
+            app:destination="@id/attendanceFragment"
+            app:popUpTo="@id/ADetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

@@ -131,7 +131,8 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     override fun onDayClick(day: String, position: Int) {
         if (day != ""){
 //            Toast.makeText(requireContext(), "Selected Date  $day  ${monthYearFromDate(selectedDate)}", Toast.LENGTH_LONG).show()
-            findNavController().navigate(CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment("$day  ${monthYearFromDate(selectedDate)}"))
+            val d = "$day  ${monthYearFromDate(selectedDate)}"
+            findNavController().navigate(CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment(d))
         }
     }
 

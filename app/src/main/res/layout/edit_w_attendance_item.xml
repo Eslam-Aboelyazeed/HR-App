@@ -4,21 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/w_attendance_item"
+        android:id="@+id/edit_w_attendance_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-<!--        <CheckBox-->
-<!--            android:id="@+id/attended_w_name"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="32dp"-->
-<!--            android:layout_marginTop="32dp"-->
-<!--            android:textSize="30sp"-->
-<!--            android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/attended_w_name"
@@ -33,26 +21,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/arrival_time"
+        <EditText
+            android:id="@+id/w_arrival_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/leave_time"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:hint="Arrival Time"
+            android:inputType="time"
+            app:layout_constraintBottom_toTopOf="@+id/w_leave_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/attended_w_name"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/leave_time"
+        <EditText
+            android:id="@+id/w_leave_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:textSize="20sp"
+            android:ems="10"
+            android:hint="Leave Time"
+            android:inputType="time"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/attended_w_name" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
