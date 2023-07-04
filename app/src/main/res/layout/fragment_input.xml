@@ -8,91 +8,187 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Employee Information"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <EditText
             android:id="@+id/wFName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
             android:hint="First Name"
+            android:inputType="textPersonName"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/wLName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
             android:hint="Last Name"
+            android:inputType="textPersonName"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wFName"
-            app:layout_constraintVertical_bias="0.063" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/dOB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
             android:hint="Date Of Birth"
+            android:inputType="date"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wLName"
-            app:layout_constraintVertical_bias="0.082" />
+            app:layout_constraintTop_toBottomOf="@+id/wLName" />
 
         <EditText
             android:id="@+id/wSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
             android:hint="The Salary"
+            android:inputType="number"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dOB"
-            app:layout_constraintVertical_bias="0.092" />
+            app:layout_constraintTop_toBottomOf="@+id/phoneNum" />
 
         <EditText
             android:id="@+id/phoneNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="phone"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
             android:hint="Phone Number"
+            android:inputType="phone"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wSalary"
-            app:layout_constraintVertical_bias="0.119" />
+            app:layout_constraintTop_toBottomOf="@+id/wCity" />
 
-        <Button
+        <EditText
+            android:id="@+id/wCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
+            android:hint="Country"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wNationality" />
+
+        <EditText
+            android:id="@+id/wCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
+            android:hint="City"
+            android:inputType="textPersonName"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wNationalId" />
+
+        <EditText
+            android:id="@+id/wGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
+            android:inputType="textPersonName"
+            android:hint="Gender"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wFName" />
+
+        <EditText
+            android:id="@+id/wNationality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
+            android:inputType="textPersonName"
+            android:hint="Nationality"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wGender" />
+
+        <EditText
+            android:id="@+id/wNationalId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:ems="8"
+            android:hint="National ID"
+            android:inputType="number"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dOB" />
+
+        <EditText
+            android:id="@+id/wHireDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
+            android:hint="Hire Date"
+            android:inputType="date"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wCountry" />
+
+        <EditText
+            android:id="@+id/wDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:ems="8"
+            android:inputType="textPersonName"
+            android:hint="Department"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wHireDate" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addWButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Worker"
-            android:textColor="@color/white"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneNum" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.94"
+            app:srcCompat="@drawable/ic_check" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

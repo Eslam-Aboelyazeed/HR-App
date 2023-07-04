@@ -32,7 +32,7 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
 //    private lateinit var attendedWList: AttendedWorkers
 
-//    private lateinit var wList: ArrayList<Worker>
+    private lateinit var wList: ArrayList<Worker>
 
     private lateinit var day: String
 
@@ -62,18 +62,18 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
 //        attendedWList = AttendedWorkers()
 
-//        wList = arrayListOf()
-//
+        wList = arrayListOf()
+
 //        wList.clear()
 
 //        setHasOptionsMenu(true)
 
-        getLiveUpdates()
+        getLiveUpdatesForWorkers()
+
+//        getLiveUpdates()
 
 
-//        getLiveUpdatesForWorkers()
-
-        RV.adapter = ARV(this, allWList)
+//        RV.adapter = ARV(this, allWList, wList)
 
 
 //        _binding.applyEditFab.setOnClickListener {
@@ -197,7 +197,7 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
                 for (document in it){
                     val worker = document.toObject<Worker>()
                     allWList.add(worker)
-                    RV.adapter = ARV(this, allWList)
+                    RV.adapter = ARV(this, allWList, wList)
                 }
 
             }
@@ -212,29 +212,33 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 //        }
     }
 
-//    private fun getLiveUpdatesForWorkers(){
-//
-//        dayCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
-//
-//            wList.clear()
-//            firebaseFirestoreException?.let {
-//                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-//                return@addSnapshotListener
-//            }
-//
-//            querySnapshot?.let {
-//                for (document in it){
-//                    val wAttendance = document.toObject<WAttendance>()
-//                    if (wAttendance.day == day) {
-//                        wList = wAttendance.workers
+    private fun getLiveUpdatesForWorkers(){
+
+        dayCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            wList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val wAttendance = document.toObject<Worker>()
+                    if (wAttendance.day == day) {
+                        wList.add(wAttendance)
 //                        RV.adapter = WRV(this, wList)
-//                    }
-//
-//                }
-//
-//            }
-//        }
-//    }
+                    }
+//                    do {
+//                        wList.add(wAttendance)
+//                    } while (wAttendance.day == day)
+
+                }
+                getLiveUpdates()
+
+            }
+        }
+    }
 
 //    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
 //

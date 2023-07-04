@@ -33,14 +33,24 @@ class InputFragment : Fragment() {
         _binding.addWButton.setOnClickListener {
             if (_binding.wFName.text.isNotEmpty() && _binding.wLName.text.isNotEmpty() &&
                 _binding.dOB.text.isNotEmpty() && _binding.wSalary.text.isNotEmpty() &&
-                _binding.phoneNum.text.isNotEmpty()){
+                _binding.phoneNum.text.isNotEmpty() && _binding.wCountry.text.isNotEmpty() &&
+                _binding.wCity.text.isNotEmpty() && _binding.wGender.text.isNotEmpty() &&
+                _binding.wNationality.text.isNotEmpty() && _binding.wNationalId.text.isNotEmpty() &&
+                _binding.wHireDate.text.isNotEmpty() && _binding.wDepartment.text.isNotEmpty()){
                 saveWorker(
                     Worker(
                         _binding.wFName.text.toString(),
                         _binding.wLName.text.toString(),
                         _binding.dOB.text.toString(),
                         _binding.wSalary.text.toString(),
-                        _binding.phoneNum.text.toString()
+                        _binding.phoneNum.text.toString(),
+                        _binding.wCountry.text.toString(),
+                        _binding.wCity.text.toString(),
+                        _binding.wGender.text.toString(),
+                        _binding.wNationality.text.toString(),
+                        _binding.wNationalId.text.toString(),
+                        _binding.wHireDate.text.toString(),0,0,
+                        _binding.wDepartment.text.toString()
                     )
                 )
                 findNavController().navigate(R.id.action_inputFragment_to_workerFragment)

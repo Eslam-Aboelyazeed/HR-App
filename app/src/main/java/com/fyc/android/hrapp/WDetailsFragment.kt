@@ -40,7 +40,14 @@ class WDetailsFragment : Fragment() {
         _binding.wLName.isFocusable = false
         _binding.wDob.isFocusable = false
         _binding.wPn.isFocusable = false
-        _binding.wSalary.isFocusable= false
+        _binding.wSalary.isFocusable = false
+        _binding.wCountry.isFocusable = false
+        _binding.wCity.isFocusable = false
+        _binding.wGender.isFocusable = false
+        _binding.wNationality.isFocusable = false
+        _binding.wNationalId.isFocusable = false
+        _binding.wHireDate.isFocusable = false
+        _binding.wDepartment.isFocusable = false
 
         worker = arguments?.let { WDetailsFragmentArgs.fromBundle(it).workersList }!!
 
@@ -49,6 +56,13 @@ class WDetailsFragment : Fragment() {
         _binding.wDob.setText(worker?.dOB)
         _binding.wPn.setText(worker?.pNumber)
         _binding.wSalary.setText(worker?.salary)
+        _binding.wCountry.setText(worker?.country)
+        _binding.wCity.setText(worker?.city)
+        _binding.wGender.setText(worker?.gender)
+        _binding.wNationality.setText(worker?.nationality)
+        _binding.wNationalId.setText(worker?.nationalId)
+        _binding.wHireDate.setText(worker?.hireDate)
+        _binding.wDepartment.setText(worker?.department)
 
         setHasOptionsMenu(true)
 
@@ -62,6 +76,13 @@ class WDetailsFragment : Fragment() {
             _binding.wDob.isFocusable = false
             _binding.wPn.isFocusable = false
             _binding.wSalary.isFocusable= false
+            _binding.wCountry.isFocusable = false
+            _binding.wCity.isFocusable = false
+            _binding.wGender.isFocusable = false
+            _binding.wNationality.isFocusable = false
+            _binding.wNationalId.isFocusable = false
+            _binding.wHireDate.isFocusable = false
+            _binding.wDepartment.isFocusable = false
             _binding.applyEditFab.isClickable = false
             _binding.applyEditFab.visibility = View.INVISIBLE
         }
@@ -75,6 +96,13 @@ class WDetailsFragment : Fragment() {
         val dOB = _binding.wDob.text.toString()
         val salary = _binding.wSalary.text.toString()
         val pNumber = _binding.wPn.text.toString()
+        val country = _binding.wCountry.text.toString()
+        val city = _binding.wCity.text.toString()
+        val gender = _binding.wGender.text.toString()
+        val nationality = _binding.wNationality.text.toString()
+        val nationalId = _binding.wNationalId.text.toString()
+        val hireDate = _binding.wHireDate.text.toString()
+        val department = _binding.wDepartment.text.toString()
         val map = mutableMapOf<String, Any>()
         if (fName.isNotEmpty()) {
             map["fname"] = fName
@@ -91,6 +119,27 @@ class WDetailsFragment : Fragment() {
         if (pNumber.isNotEmpty()) {
             map["pnumber"] = pNumber
         }
+        if (country.isNotEmpty()) {
+            map["country"] = country
+        }
+        if (city.isNotEmpty()) {
+            map["city"] = city
+        }
+        if (gender.isNotEmpty()) {
+            map["gender"] = gender
+        }
+        if (nationality.isNotEmpty()) {
+            map["nationality"] = nationality
+        }
+        if (nationalId.isNotEmpty()) {
+            map["nationalId"] = nationalId
+        }
+        if (hireDate.isNotEmpty()) {
+            map["hireDate"] = hireDate
+        }
+        if (department.isNotEmpty()) {
+            map["department"] = department
+        }
         return map
     }
 
@@ -101,6 +150,13 @@ class WDetailsFragment : Fragment() {
             .whereEqualTo("dob", worker.dOB)
             .whereEqualTo("salary", worker.salary)
             .whereEqualTo("pnumber", worker.pNumber)
+//            .whereEqualTo("country", worker.country)
+//            .whereEqualTo("city", worker.city)
+//            .whereEqualTo("gender", worker.gender)
+//            .whereEqualTo("nationality", worker.nationality)
+//            .whereEqualTo("nationalid", worker.nationalId)
+//            .whereEqualTo("hiredate", worker.hireDate)
+//            .whereEqualTo("department", worker.department)
             .get()
             .await()
         if (workerQuery.documents.isNotEmpty()){
@@ -131,6 +187,13 @@ class WDetailsFragment : Fragment() {
             .whereEqualTo("dob", worker.dOB)
             .whereEqualTo("salary", worker.salary)
             .whereEqualTo("pnumber", worker.pNumber)
+//            .whereEqualTo("country", worker.country)
+//            .whereEqualTo("city", worker.city)
+//            .whereEqualTo("gender", worker.gender)
+//            .whereEqualTo("nationality", worker.nationality)
+//            .whereEqualTo("nationalid", worker.nationalId)
+//            .whereEqualTo("hiredate", worker.hireDate)
+//            .whereEqualTo("department", worker.department)
             .get()
             .await()
         if (workerQuery.documents.isNotEmpty()){
@@ -169,6 +232,13 @@ class WDetailsFragment : Fragment() {
                                  _binding.wDob.isFocusableInTouchMode = true;
                                  _binding.wPn.isFocusableInTouchMode = true;
                                  _binding.wSalary.isFocusableInTouchMode= true;
+                                 _binding.wCountry.isFocusableInTouchMode= true;
+                                 _binding.wCity.isFocusableInTouchMode= true;
+                                 _binding.wGender.isFocusableInTouchMode= true;
+                                 _binding.wNationality.isFocusableInTouchMode= true;
+                                 _binding.wNationalId.isFocusableInTouchMode= true;
+                                 _binding.wHireDate.isFocusableInTouchMode= true;
+                                 _binding.wDepartment.isFocusableInTouchMode= true;
                                  _binding.applyEditFab.isClickable = true;
                                  _binding.applyEditFab.visibility = View.VISIBLE}
         }

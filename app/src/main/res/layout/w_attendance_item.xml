@@ -38,21 +38,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:textSize="20sp"
+            android:text="Arrival Time: 0"
             app:layout_constraintBottom_toTopOf="@+id/leave_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/attended_w_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/leave_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:textSize="20sp"
+            android:text="Leave Time: 0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/attended_w_name" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

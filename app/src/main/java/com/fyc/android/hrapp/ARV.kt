@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
+class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>, val wList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {
@@ -35,9 +35,33 @@ class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>
 
         holder.name.text = currentWorker.fName + " " + currentWorker.lName
 
-        holder.arrivalTime.text = "Arrival Time: " + currentWorker.aTime
+        for (w in wList) {
 
-        holder.leaveTime.text = "Leave Time: " + currentWorker.lTime
+            if (w.fName == currentWorker.fName && w.lName == currentWorker.lName &&
+                w.dOB == currentWorker.dOB) {
+
+                holder.arrivalTime.text = "Arrival Time: " + w.aTime
+
+                holder.leaveTime.text = "Leave Time: " + w.lTime
+
+
+
+            }
+//            else {
+//
+//                holder.arrivalTime.text = "Arrival Time: " + currentWorker.aTime
+//
+//                holder.leaveTime.text = "Leave Time: " + currentWorker.lTime
+//
+//            }
+
+        }
+
+
+
+//        holder.arrivalTime.text = "Arrival Time: " + currentWorker.aTime
+//
+//        holder.leaveTime.text = "Leave Time: " + currentWorker.lTime
 
 
 //        fun makeItFocusable() {
