@@ -1,5 +1,6 @@
 package com.fyc.android.hrapp
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -40,6 +41,11 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
     private val dayCollectionRef = Firebase.firestore.collection("days")
 
+    private val holidaysCollectionRef = Firebase.firestore.collection("holidays")
+
+    private lateinit var hList: ArrayList<Holidays>
+
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +55,8 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
             inflater, R.layout.fragment_attendance, container, false)
 
         day = arguments.let { AttendanceFragmentArgs.fromBundle(it!!).theDay }
+
+        val bool = arguments.let { AttendanceFragmentArgs.fromBundle(it!!).bool }
 
         RV = _binding.allWorkersList
 
@@ -64,11 +72,23 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
         wList = arrayListOf()
 
+        hList = arrayListOf()
+
 //        wList.clear()
 
 //        setHasOptionsMenu(true)
 
-        getLiveUpdatesForWorkers()
+
+                if (bool) {
+//                    Toast.makeText(requireContext(), "This is a Holiday", Toast.LENGTH_LONG).show()
+                    _binding.textView3.visibility = View.VISIBLE
+                    _binding.allWorkersList.visibility = View.GONE
+                } else {
+                    getLiveUpdatesForWorkers()
+                }
+
+
+
 
 //        getLiveUpdates()
 
@@ -235,6 +255,26 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
                 }
                 getLiveUpdates()
+
+            }
+        }
+    }
+
+    private fun getHolidaysLiveUpdates(){
+
+        holidaysCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            hList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val holiday = document.toObject<Holidays>()
+                    hList.add(holiday)
+                }
 
             }
         }

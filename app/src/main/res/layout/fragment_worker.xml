@@ -15,7 +15,7 @@
             android:layout_marginTop="16dp"
             android:text="All Employees"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="60sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

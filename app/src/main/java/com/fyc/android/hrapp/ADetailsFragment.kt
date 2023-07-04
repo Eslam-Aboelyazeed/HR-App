@@ -48,7 +48,7 @@ class ADetailsFragment : Fragment() {
 
             updateWorkerAttendance(getEditedWorkerAttendance())
 
-            findNavController().navigate(ADetailsFragmentDirections.actionADetailsFragmentToAttendanceFragment(day))
+            findNavController().navigate(ADetailsFragmentDirections.actionADetailsFragmentToAttendanceFragment(day, false))
 
         }
 

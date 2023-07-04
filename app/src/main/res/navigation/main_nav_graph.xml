@@ -71,6 +71,9 @@
         <action
             android:id="@+id/action_attendanceFragment_to_ADetailsFragment"
             app:destination="@id/ADetailsFragment" />
+        <argument
+            android:name="bool"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/ADetailsFragment"

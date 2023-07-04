@@ -2,6 +2,7 @@ package com.fyc.android.hrapp
 
 import android.os.Build
 import android.os.Bundle
+import android.service.controls.actions.BooleanAction
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentCalendarBinding
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -28,6 +32,12 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     private lateinit var selectedDate: LocalDate
 
     private lateinit var monthYearText: TextView
+
+    private val holidaysCollectionRef = Firebase.firestore.collection("holidays")
+
+    private lateinit var hList: ArrayList<Holidays>
+
+    private var boolean: Boolean = false
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -49,6 +59,10 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
         _binding.forwardBtn.setOnClickListener {
             nextMonthAction()
         }
+
+        hList = arrayListOf()
+
+        getLiveUpdates()
 
         return _binding.root
     }
@@ -128,11 +142,65 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
         setMonthView()
     }
 
+    private fun getLiveUpdates(){
+
+        holidaysCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            hList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val holiday = document.toObject<Holidays>()
+                    hList.add(holiday)
+                }
+
+            }
+        }
+    }
+
     override fun onDayClick(day: String, position: Int) {
-        if (day != ""){
+        if (day != "") {
 //            Toast.makeText(requireContext(), "Selected Date  $day  ${monthYearFromDate(selectedDate)}", Toast.LENGTH_LONG).show()
+
+            val dy = "$day ${monthYearFromDate(selectedDate)}"
+//            for (h in hList){
+//                boolean = h.day == dy
+//            }
             val d = "$day  ${monthYearFromDate(selectedDate)}"
-            findNavController().navigate(CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment(d))
+            if (hList.contains(Holidays(dy))) {
+                boolean = true
+                findNavController().navigate(
+                    CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment(
+                        d, boolean
+                    )
+                )
+            } else {
+                boolean = false
+                findNavController().navigate(
+                    CalendarFragmentDirections.actionCalendarFragmentToAttendanceFragment(
+                        d, boolean
+                    )
+                )
+            }
+
+
+
+
+
+//            val dy = "$day ${monthYearFromDate(selectedDate)}"
+//              Toast.makeText(requireContext(), d, Toast.LENGTH_LONG).show()
+//            for (h in hList){
+//                if (h.day == dy) {
+//                    Toast.makeText(requireContext(), "This is a Holiday", Toast.LENGTH_LONG).show()
+//                } else {
+//                    navigate()
+//                }
+//            }
+
         }
     }
 

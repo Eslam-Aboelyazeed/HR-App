@@ -85,6 +85,7 @@ class WDetailsFragment : Fragment() {
             _binding.wDepartment.isFocusable = false
             _binding.applyEditFab.isClickable = false
             _binding.applyEditFab.visibility = View.INVISIBLE
+            Toast.makeText(requireContext(), "Successfully Edited", Toast.LENGTH_LONG).show()
         }
 
         return _binding.root

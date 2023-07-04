@@ -52,3 +52,6 @@ data class WAttendance(
                         var day: String = "",
                         var workers: Worker= Worker()
 ): Parcelable
+
+@Parcelize
+data class Holidays(val day: String = ""): Parcelable
