@@ -19,7 +19,18 @@ data class Worker(
                   var aTime: Int = 0,
                   var lTime: Int = 0,
                   var department: String = "",
-                  var day: String = ""
+                  var day: String = "",
+                  var dSalary: String = "",
+                  var mSalary: String = ""
+): Parcelable
+
+@Parcelize
+data class MonthSalary(
+                       var fName: String = "",
+                       var lName: String = "",
+                       var dOB: String = "",
+                       var month: String = "",
+                       var salary: String = ""
 ): Parcelable
 
 @Parcelize
@@ -38,7 +49,9 @@ data class AttendedWorker(
                             var aTime: Int = 0,
                             var lTime: Int = 0,
                             var department: String = "",
-                            var day: String = ""
+                            var day: String = "",
+                            var dSalary: String = "",
+                            var mSalary: String = ""
 ): Parcelable
 
 @Parcelize

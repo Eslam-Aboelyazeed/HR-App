@@ -50,6 +50,10 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
             findNavController().navigate(R.id.action_workerFragment_to_calendarFragment)
         }
 
+        _binding.sfab.setOnClickListener {
+            findNavController().navigate(R.id.action_workerFragment_to_salaryFragment)
+        }
+
         getLiveUpdates()
 
         return _binding.root
