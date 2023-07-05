@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentSalaryBinding
@@ -136,14 +137,19 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 //            }
 //        }
 
+        getMonthLiveUpdates()
 
         getLiveUpdates()
 
         getDaysLiveUpdates()
 
-        getMonthLiveUpdates()
+        _binding.doneFab.setOnClickListener {
+            findNavController().navigate(R.id.action_salaryFragment_to_workerFragment)
+        }
 
-        Toast.makeText(requireContext(), msList.toString(), Toast.LENGTH_LONG).show()
+
+
+//        Toast.makeText(requireContext(), msList.toString(), Toast.LENGTH_LONG).show()
 
         return _binding.root
     }
@@ -330,22 +336,47 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
         val employee = wList[position]
 //        var monthSalary = 0
-//        var mssalary = 0
+        msSalary = 0
 
 //        if (dList.contains(Worker(employee.fName,employee.lName,employee.dOB,employee.salary))){
-//            Toast.makeText(requireContext(), employee.toString(), Toast.LENGTH_LONG).show()
+//            Toast.makeText(requireContext(), month, Toast.LENGTH_LONG).show()
 //        }
         for (w in dList) {
-            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB) {
-                val hourSalary = w.salary.toInt() / 21 / 24
+            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
+                    w.day.contains(month)) {
+                val hourSalary = w.salary.toInt() / 20 / 24
                 val dayHours = w.lTime - w.aTime
                 val daySalary = hourSalary  * dayHours
                 updateWorkerDailySalary(w, daySalary.toString())
-                dSalary = w.dSalary.toInt()
-
-
+//                dSalary = w.dSalary.toInt()
             }
         }
+
+        for (w in dList) {
+            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
+                w.day.contains(month)) {
+                msSalary+= w.dSalary.toInt()
+            }
+        }
+
+        findNavController().navigate(SalaryFragmentDirections
+            .actionSalaryFragmentToSalaryDetailsFragment(employee, month, msSalary.toString()))
+
+//        if (msList.toString().contains(employee.fName) &&
+//            msList.toString().contains(employee.lName) && msList.toString().contains(employee.dOB)){
+//            for (w in dList) {
+//                if (w.fName == employee.fName && w.lName == employee.lName &&
+//                    w.dOB == employee.dOB && w.day.contains(month)) {
+//                    if (msList)
+//                    msSalary += w.dSalary.toInt()
+//                    updateWorkerMonthlySalary(MonthSalary(w.fName, w.lName, w.dOB, month),
+//                        msSalary.toString())
+//
+//                }
+//            }
+//        } else {
+//            saveMonthlySalary(MonthSalary(employee.fName, employee.lName, employee.dOB, month))
+//        }
 
 
 

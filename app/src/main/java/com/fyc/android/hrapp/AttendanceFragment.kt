@@ -79,13 +79,13 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 //        setHasOptionsMenu(true)
 
 
-                if (bool) {
-//                    Toast.makeText(requireContext(), "This is a Holiday", Toast.LENGTH_LONG).show()
-                    _binding.textView3.visibility = View.VISIBLE
-                    _binding.allWorkersList.visibility = View.GONE
-                } else {
-                    getLiveUpdatesForWorkers()
-                }
+        if (bool) {
+            _binding.textView3.visibility = View.VISIBLE
+            _binding.allWorkersList.visibility = View.GONE
+
+        } else {
+            getLiveUpdatesForWorkers()
+        }
 
 
 

@@ -105,5 +105,28 @@
             app:destination="@id/workerFragment"
             app:popUpTo="@id/salaryFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_salaryFragment_to_salaryDetailsFragment"
+            app:destination="@id/salaryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/salaryDetailsFragment"
+        android:name="com.fyc.android.hrapp.SalaryDetailsFragment"
+        android:label="SalaryDetailsFragment"
+        tools:layout="@layout/fragment_salary_details">
+        <action
+            android:id="@+id/action_salaryDetailsFragment_to_salaryFragment"
+            app:destination="@id/salaryFragment"
+            app:popUpTo="@id/salaryDetailsFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="s_worker"
+            app:argType="com.fyc.android.hrapp.Worker" />
+        <argument
+            android:name="month"
+            app:argType="string" />
+        <argument
+            android:name="mSalary"
+            app:argType="string" />
     </fragment>
 </navigation>
