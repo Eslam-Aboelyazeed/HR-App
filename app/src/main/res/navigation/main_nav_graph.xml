@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_workerFragment_to_salaryFragment"
             app:destination="@id/salaryFragment" />
+        <action
+            android:id="@+id/action_workerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/WDetailsFragment"
@@ -129,4 +132,9 @@
             android:name="mSalary"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.fyc.android.hrapp.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

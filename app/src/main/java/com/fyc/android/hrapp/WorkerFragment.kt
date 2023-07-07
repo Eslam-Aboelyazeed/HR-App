@@ -1,21 +1,30 @@
 package com.fyc.android.hrapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.fyc.android.hrapp.databinding.FragmentWorkerBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
 class WorkerFragment : Fragment(), WRV.onClickListener {
+
+    private val viewModel by activityViewModels<LoginViewModel>()
+
+    private lateinit var user: String
 
     private lateinit var RV: RecyclerView
 
@@ -56,7 +65,32 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
         getLiveUpdates()
 
+        setHasOptionsMenu(true)
+
         return _binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+
+            when (authenticationState) {
+                LoginViewModel.AuthenticationState.AUTHENTICATED ->{ Log.e(
+                    "ReminderListFragment",
+                    "Authentication state is $authenticationState");
+                    user = Firebase.auth.currentUser?.email ?: "";
+                    Toast.makeText(requireContext(), user, Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Log.e(
+                    "ReminderListFragment",
+                    "Authentication state is $authenticationState")
+                    ;findNavController().navigate(R.id.action_workerFragment_to_loginFragment)}
+            }
+        })
+
     }
 
     private fun getLiveUpdates(){
@@ -82,6 +116,23 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     override fun onItemClick(position: Int) {
         findNavController().navigate(WorkerFragmentDirections.actionWorkerFragmentToWDetailsFragment(wList[position]))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.logout_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout -> {
+                AuthUI.getInstance().signOut(requireContext())
+                findNavController().navigate(R.id.action_workerFragment_to_loginFragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+
     }
 
 }
