@@ -27,11 +27,11 @@
             android:id="@+id/wName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="86dp"
+            android:layout_marginTop="80dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -40,15 +40,61 @@
             android:id="@+id/w_m_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:hint="Employee Salary"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/month" />
+
+        <EditText
+            android:id="@+id/w_m_days_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="number"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:hint="Employee Days Off"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wName" />
+            app:layout_constraintTop_toBottomOf="@+id/w_m_salary" />
+
+        <EditText
+            android:id="@+id/w_m_bonus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:hint="Employee Bonuses"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w_m_days_off" />
+
+        <EditText
+            android:id="@+id/w_m_deduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:ems="10"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:hint="Salary Deduction"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w_m_bonus" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/e_done_fab"
@@ -67,11 +113,11 @@
             android:id="@+id/month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/w_m_salary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wName" />

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentSalaryDetailsBinding
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,10 @@ class SalaryDetailsFragment : Fragment() {
 
     private val holidaysCollectionRef = Firebase.firestore.collection("holidays")
 
+    private lateinit var msList: ArrayList<MonthSalary>
+
+    private lateinit var hList: ArrayList<Holidays>
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +55,16 @@ class SalaryDetailsFragment : Fragment() {
 
         mSalary = arguments.let { SalaryDetailsFragmentArgs.fromBundle(it!!).mSalary }
 
+        msList = arrayListOf()
+
+        hList = arrayListOf()
+
+        getMonthLiveUpdates()
+
         _binding.wMSalary.isFocusable = false
+        _binding.wMDaysOff.isFocusable = false
+        _binding.wMBonus.isFocusable = false
+        _binding.wMDeduction.isFocusable = false
 
         _binding.wMSalary.setText(mSalary)
 
@@ -58,19 +72,56 @@ class SalaryDetailsFragment : Fragment() {
 
         _binding.month.text = month
 
+//        for (ms in msList) {
+//            if (ms.fName == worker.fName && ms.lName == worker.lName && ms.dOB == worker.dOB &&
+//                    ms.month == month) {
+//                _binding.wMDaysOff.setText(ms.daysoff)
+//                _binding.wMBonus.setText(ms.bonus)
+//                _binding.wMDeduction.setText(ms.deduction)
+//            }
+//        }
+
+
         setHasOptionsMenu(true)
 
         updateWorkerMonthlySalary()
 
         _binding.eDoneFab.setOnClickListener {
-            if (_binding.wMSalary.text.toString().isNotEmpty()){
-                updateWorkerMonthlySalaryManually(_binding.wMSalary.text.toString())
+            if (//_binding.wMSalary.text.toString().isNotEmpty() &&
+                _binding.wMDaysOff.text.toString().isNotEmpty() &&
+                _binding.wMBonus.text.toString().isNotEmpty() &&
+                _binding.wMDeduction.text.toString().isNotEmpty()) {
+                if (_binding.wMDaysOff.text.toString().toInt() >= 1) {
+                    val hourSalary = worker.salary.toInt() / 21 / 24
+                    val daySalary = hourSalary  * 8
+                    val s = mSalary.toInt() + daySalary + _binding.wMBonus.text.toString().toInt() -
+                            _binding.wMDeduction.text.toString().toInt()
+                    updateWorkerMonthlySalaryManually(s.toString(),
+                        _binding.wMDaysOff.text.toString(),_binding.wMBonus.text.toString(),
+                        _binding.wMDeduction.text.toString())
+                    getMonthLiveUpdates()
+                    _binding.wMDaysOff.isFocusable = false
+                    _binding.wMBonus.isFocusable = false
+                    _binding.wMDeduction.isFocusable = false
+                    _binding.eDoneFab.isClickable = false
+                    _binding.eDoneFab.visibility = View.INVISIBLE
+                } else {
+                    val s = mSalary.toInt() + _binding.wMBonus.text.toString().toInt() -
+                            _binding.wMDeduction.text.toString().toInt()
+                    updateWorkerMonthlySalaryManually(s.toString(),
+                        _binding.wMDaysOff.text.toString(),_binding.wMBonus.text.toString(),
+                        _binding.wMDeduction.text.toString())
+                    getMonthLiveUpdates()
+                    _binding.wMDaysOff.isFocusable = false
+                    _binding.wMBonus.isFocusable = false
+                    _binding.wMDeduction.isFocusable = false
+                    _binding.eDoneFab.isClickable = false
+                    _binding.eDoneFab.visibility = View.INVISIBLE
+                }
             } else {
-                Toast.makeText(requireContext(), "Please Input a Salary", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    requireContext(), "Please Input the Details", Toast.LENGTH_LONG).show()
             }
-            _binding.wMSalary.isFocusable = false
-            _binding.eDoneFab.isClickable = false
-            _binding.eDoneFab.visibility = View.INVISIBLE
         }
 
 
@@ -119,7 +170,7 @@ class SalaryDetailsFragment : Fragment() {
         }
     }
 
-    fun updateWorkerMonthlySalaryManually(salary: String) = CoroutineScope(Dispatchers.IO).launch {
+    fun updateWorkerMonthlySalaryManually(salary: String, daysOff: String, bonus: String, deduction: String) = CoroutineScope(Dispatchers.IO).launch {
         val workerQuery = salaryCollectionRef
             .whereEqualTo("fname", worker.fName)
             .whereEqualTo("lname", worker.lName)
@@ -131,6 +182,9 @@ class SalaryDetailsFragment : Fragment() {
             for (document in workerQuery){
                 try {
                     salaryCollectionRef.document(document.id).update("salary", salary)
+                    salaryCollectionRef.document(document.id).update("daysoff", daysOff)
+                    salaryCollectionRef.document(document.id).update("bonus", bonus)
+                    salaryCollectionRef.document(document.id).update("deduction", deduction)
 
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
@@ -173,6 +227,57 @@ class SalaryDetailsFragment : Fragment() {
         }
     }
 
+    private fun getMonthLiveUpdates(){
+
+        salaryCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            msList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val worker = document.toObject<MonthSalary>()
+//                    if (wList.find { it.fName == worker.fName }?.fName == worker.fName)
+                    msList.add(worker)
+
+                }
+                for (ms in msList) {
+                    if (ms.fName == worker.fName && ms.lName == worker.lName &&
+                        ms.dOB == worker.dOB && ms.month == month) {
+                        _binding.wMSalary.setText(ms.salary)
+                        _binding.wMDaysOff.setText(ms.daysoff)
+                        _binding.wMBonus.setText(ms.bonus)
+                        _binding.wMDeduction.setText(ms.deduction)
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun getLiveUpdatesForHolidays(){
+
+        holidaysCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            hList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val holiday = document.toObject<Holidays>()
+                    hList.add(holiday)
+                }
+
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
 
         inflater.inflate(R.menu.overflow_menu, menu)
@@ -186,7 +291,10 @@ class SalaryDetailsFragment : Fragment() {
         when (item.itemId) {
             R.id.delete_worker -> {deleteWorker(worker);
                 findNavController().navigate(R.id.action_salaryDetailsFragment_to_salaryFragment)}
-            R.id.edit_worker -> { _binding.wMSalary.isFocusableInTouchMode = true;
+            R.id.edit_worker -> { //_binding.wMSalary.isFocusableInTouchMode = true;
+                _binding.wMDaysOff.isFocusableInTouchMode = true;
+                _binding.wMBonus.isFocusableInTouchMode = true;
+                _binding.wMDeduction.isFocusableInTouchMode = true;
                 _binding.eDoneFab.isClickable = true;
                 _binding.eDoneFab.visibility = View.VISIBLE}
         }

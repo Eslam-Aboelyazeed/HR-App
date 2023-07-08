@@ -34,6 +34,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
     private val salaryCollectionRef = Firebase.firestore.collection("salary")
 
+    private val holidaysCollectionRef = Firebase.firestore.collection("holidays")
+
     private lateinit var RV: RecyclerView
 
     private lateinit var wList: ArrayList<Worker>
@@ -41,6 +43,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
     private lateinit var dList: ArrayList<Worker>
 
     private lateinit var msList: ArrayList<MonthSalary>
+
+    private lateinit var hList: ArrayList<Holidays>
 
     private val c  = Calendar.getInstance()
 
@@ -78,6 +82,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         dList = arrayListOf()
 
         msList = arrayListOf()
+
+        hList = arrayListOf()
 
 //        val c  = Calendar.getInstance()
 //
@@ -143,6 +149,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
         getDaysLiveUpdates()
 
+        getLiveUpdatesForHolidays()
+
         _binding.doneFab.setOnClickListener {
             findNavController().navigate(R.id.action_salaryFragment_to_workerFragment)
         }
@@ -177,6 +185,26 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         } catch (e:Exception){
             withContext(Dispatchers.Main) {
                 Toast.makeText(requireContext(),e.message,Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun getLiveUpdatesForHolidays(){
+
+        holidaysCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            hList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val holiday = document.toObject<Holidays>()
+                    hList.add(holiday)
+                }
+
             }
         }
     }
@@ -344,7 +372,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         for (w in dList) {
             if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
                     w.day.contains(month)) {
-                val hourSalary = w.salary.toInt() / 20 / 24
+                val hourSalary = w.salary.toInt() / 21 / 24
                 val dayHours = w.lTime - w.aTime
                 val daySalary = hourSalary  * dayHours
                 updateWorkerDailySalary(w, daySalary.toString())
@@ -356,6 +384,32 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
             if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
                 w.day.contains(month)) {
                 msSalary+= w.dSalary.toInt()
+            }
+        }
+
+        for (w in msList) {
+            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
+                w.month == month && w.daysoff != "" && w.bonus != "" && w.deduction != "") {
+                if (w.daysoff.toInt() >= 1) {
+                    val hourSalary = employee.salary.toInt() / 21 / 24
+                    val daySalary = hourSalary  * 8
+                    val s = msSalary + daySalary + w.bonus.toInt() - w.deduction.toInt()
+                    msSalary = s
+                } else {
+                    val s = msSalary + w.bonus.toInt() - w.deduction.toInt()
+                    msSalary = s
+                }
+            }
+        }
+
+        var s = 0
+
+        for (h in hList) {
+            if (h.day.contains(month) && h.day.contains(year.toString())) {
+                val hourSalary = employee.salary.toInt() / 21 / 24
+                val daySalary = hourSalary  * 8
+                s += 1
+                msSalary += (s * daySalary)
             }
         }
 

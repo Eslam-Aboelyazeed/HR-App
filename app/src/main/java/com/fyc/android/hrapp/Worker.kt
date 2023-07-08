@@ -30,7 +30,10 @@ data class MonthSalary(
                        var lName: String = "",
                        var dOB: String = "",
                        var month: String = "",
-                       var salary: String = ""
+                       var salary: String = "",
+                       var daysoff: String = "",
+                       var bonus: String = "",
+                       var deduction: String = ""
 ): Parcelable
 
 @Parcelize

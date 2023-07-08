@@ -12,7 +12,6 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -21,9 +20,8 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.fyc.android.hrapp.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 class LoginFragment : Fragment() {
 
     private val viewModel by activityViewModels<LoginViewModel>()

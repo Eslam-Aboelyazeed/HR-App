@@ -26,15 +26,43 @@ class SRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
 
         holder.name.text = currentWorker.fName + " " + currentWorker.lName
 
+        val hourSalary = currentWorker.salary.toInt() / 21 / 24
+
+        val daySalary = hourSalary  * 8
+
         for (ms in monthSalaryList) {
             if (ms.fName == currentWorker.fName && ms.lName == currentWorker.lName &&
                 ms.dOB == currentWorker.dOB && ms.month == month) {
-                holder.salary.text = "This Month Salary: " + ms.salary
+//                if (ms.daysoff != "" && ms.bonus != "") {
+//                    if (ms.daysoff.toInt() >= 1) {
+//                        val s = ms.salary.toInt() + daySalary + ms.bonus.toInt()
+//                        holder.salary.text = "This Month Salary: $s"
+//                    } else {
+//                        val s = ms.salary.toInt() + ms.bonus.toInt()
+//                        holder.salary.text = "This Month Salary: $s"
+//                    }
+//                } else {
+                    holder.salary.text = "This Month Salary: " + ms.salary
+//                }
             }
         }
 
-
-
+//        for (ms in monthSalaryList) {
+//            if (ms.fName == currentWorker.fName && ms.lName == currentWorker.lName &&
+//                ms.dOB == currentWorker.dOB && ms.month == month) {
+//                if (ms.daysoff != "" && ms.bonus != "") {
+//                    if (ms.daysoff.toInt() >= 1) {
+//                        val s = ms.salary.toInt() + daySalary + ms.bonus.toInt()
+//                        holder.salary.text = "This Month Salary: $s"
+//                    } else {
+//                        val s = ms.salary.toInt() + ms.bonus.toInt()
+//                        holder.salary.text = "This Month Salary: $s"
+//                    }
+//                } else {
+//                    holder.salary.text = "This Month Salary: " + ms.salary
+//                }
+//            }
+//        }
 
     }
 
