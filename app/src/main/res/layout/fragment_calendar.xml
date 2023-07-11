@@ -7,11 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white">
+        android:background="@color/DarkGrey">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/DarkGrey"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp">
@@ -21,10 +22,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/back"
-                android:textColor="@color/blue"
-                android:backgroundTint="@color/white"
+                android:textColor="@color/teal_700"
+                android:backgroundTint="@color/DarkGrey"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/monthYearTV"
@@ -32,9 +33,11 @@
                 android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:text="Jun 2023"
+                android:fontFamily="@font/roboto_light"
                 android:textSize="20sp"
                 android:textAlignment="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"
+                android:background="@drawable/rec_shape"/>
 
             <Button
                 android:id="@+id/forward_btn"
@@ -42,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/forward"
-                android:textColor="@color/blue"
-                android:backgroundTint="@color/white"
+                android:textColor="@color/teal_700"
+                android:backgroundTint="@color/DarkGrey"
                 android:background="@null"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
@@ -53,13 +56,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@color/DarkGrey">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="SUN"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -69,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="MON"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -78,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="TUE"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -87,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="WED"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -96,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="THUR"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -105,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="FRI"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>
@@ -114,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="SAT"
+                android:fontFamily="@font/roboto_light"
                 android:textColor="@color/gray"
                 android:textAlignment="center"
                 android:textSize="16sp"/>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingRec">
+        <attr name="backgroundColor" format="color"/>
+        <attr name="tSize" format="enum"/>
+    </declare-styleable>
+</resources>

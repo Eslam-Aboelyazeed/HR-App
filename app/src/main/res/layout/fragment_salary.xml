@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/DarkGrey">
 
         <TextView
             android:id="@+id/all_employees_salaries"
@@ -14,10 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Tap on the Employee's Name to Calculate Their Salary "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textAlignment="center"
+            android:fontFamily="@font/roboto_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

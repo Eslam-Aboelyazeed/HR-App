@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/DarkGrey">
 
         <TextView
             android:id="@+id/textView"
@@ -14,9 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Employee Information"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="40sp"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,9 +31,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="First Name"
+            android:textAlignment="center"
             android:inputType="textPersonName"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -42,9 +48,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="Last Name"
+            android:textAlignment="center"
             android:inputType="textPersonName"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -55,9 +65,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="Date Of Birth"
+            android:textAlignment="center"
             android:inputType="date"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wLName" />
 
@@ -68,9 +82,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="The Salary"
+            android:textAlignment="center"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneNum" />
 
@@ -81,9 +99,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="Phone Number"
+            android:textAlignment="center"
             android:inputType="phone"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wCity" />
 
@@ -94,9 +116,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="Country"
+            android:textAlignment="center"
             android:inputType="textPersonName"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wNationality" />
 
@@ -107,9 +133,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="City"
+            android:textAlignment="center"
             android:inputType="textPersonName"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wNationalId" />
 
@@ -120,9 +150,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:inputType="textPersonName"
             android:hint="Gender"
-            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wFName" />
 
@@ -133,9 +167,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:inputType="textPersonName"
             android:hint="Nationality"
-            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wGender" />
 
@@ -146,9 +184,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="National ID"
+            android:textAlignment="center"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dOB" />
 
@@ -159,9 +201,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:hint="Hire Date"
+            android:textAlignment="center"
             android:inputType="date"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wCountry" />
 
@@ -172,9 +218,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:ems="8"
+            android:fontFamily="@font/roboto_light"
             android:inputType="textPersonName"
             android:hint="Department"
-            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/wHireDate" />
 

@@ -3,6 +3,8 @@ package com.fyc.android.hrapp
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -27,6 +29,11 @@ class WDetailsFragment : Fragment() {
 
     private lateinit var worker: Worker
 
+//    private lateinit var animator0: TheAnimation
+//
+//    private lateinit var loadingRec: LoadingRec
+
+    @RequiresApi(Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,6 +94,17 @@ class WDetailsFragment : Fragment() {
             _binding.applyEditFab.visibility = View.INVISIBLE
             Toast.makeText(requireContext(), "Successfully Edited", Toast.LENGTH_LONG).show()
         }
+
+//        loadingRec = _binding.loadingRec
+//
+//        loadingRec.isClickable = false
+//
+//        animator0 = TheAnimation(loadingRec, loadingRec.width.toFloat())
+//
+//        animator0.duration = 1999
+//        animator0.repeatCount = 1
+//
+//        loadingRec.startAnimation(animator0)
 
         return _binding.root
     }

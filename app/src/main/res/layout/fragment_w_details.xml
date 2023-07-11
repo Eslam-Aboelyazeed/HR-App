@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/DarkGrey">
 
         <TextView
             android:id="@+id/textView2"
@@ -16,8 +16,10 @@
             android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:textSize="40sp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="Employee Detail"
+            android:fontFamily="@font/roboto_light"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,10 +32,14 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="First Name"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -44,10 +50,14 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Last Name"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -59,9 +69,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="date"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Date Of Birth"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_lName" />
 
@@ -72,9 +86,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="phone"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Phone Number"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_city" />
 
@@ -85,9 +103,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="The Salary"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_pn" />
 
@@ -98,9 +120,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Gender"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_fName" />
 
@@ -111,9 +137,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="National ID"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_dob" />
 
@@ -124,9 +154,13 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="City"
+            android:textColorHint="@color/gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_nationalId" />
 
@@ -138,9 +172,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="date"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Hire Date"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_country" />
 
@@ -151,9 +189,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Nationality"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_gender" />
 
@@ -164,9 +206,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Country"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_nationality" />
 
@@ -177,9 +223,13 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:inputType="text"
-            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_light"
+            android:textColor="@color/white"
             android:textSize="30sp"
+            android:background="@drawable/rec_shape"
+            android:textAlignment="center"
             android:hint="Department"
+            android:textColorHint="@color/gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/w_hireDate" />
 
@@ -196,6 +246,19 @@
             app:layout_constraintVertical_bias="0.946"
             app:srcCompat="@drawable/ic_check"
             android:visibility="invisible"/>
+
+<!--        <com.fyc.android.hrapp.LoadingRec-->
+<!--            android:id="@+id/loading_rec"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_margin="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintDimensionRatio="8:1"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.878"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -21,6 +21,8 @@ import com.google.firebase.ktx.Firebase
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 @RequiresApi(Build.VERSION_CODES.O)
 class CalendarFragment : Fragment(), CRV.onClickListener {
@@ -39,6 +41,16 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
 
     private var boolean: Boolean = false
 
+    private val c  = Calendar.getInstance()
+
+    private val year  = c.get(Calendar.YEAR)
+
+    private val m = c.get(Calendar.MONTH) + 1
+
+    private val day = c.get(Calendar.DAY_OF_MONTH)
+
+    private lateinit var month: String
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +58,49 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     ): View? {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_calendar, container, false)
+
+        hList = arrayListOf()
+
+        getLiveUpdates()
+
+        month = ""
+
+        if (m == 1) {
+            month = "January"
+        }
+        if (m == 2) {
+            month = "February"
+        }
+        if (m == 3) {
+            month = "March"
+        }
+        if (m == 4) {
+            month = "April"
+        }
+        if (m == 5) {
+            month = "May"
+        }
+        if (m == 6) {
+            month = "June"
+        }
+        if (m == 7) {
+            month = "July"
+        }
+        if (m == 8) {
+            month = "August"
+        }
+        if (m == 9) {
+            month = "September"
+        }
+        if (m == 10) {
+            month = "October"
+        }
+        if (m == 11) {
+            month = "November"
+        }
+        if (m == 12) {
+            month = "December"
+        }
 
         initWidgets()
 
@@ -60,10 +115,6 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
             nextMonthAction()
         }
 
-        hList = arrayListOf()
-
-        getLiveUpdates()
-
         return _binding.root
     }
 
@@ -76,11 +127,14 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     fun setMonthView() {
 
+        getLiveUpdates()
+
         monthYearText.text = monthYearFromDate(selectedDate)
 
         val daysInMonth: ArrayList<String> = daysInMonthArray(selectedDate)
 
-        val calendarAdapter: CRV = CRV(this, daysInMonth)
+        val calendarAdapter: CRV = CRV(this, daysInMonth, day,
+            "$month $year", _binding.monthYearTV, hList)
 
         val manager = GridLayoutManager(activity, 7)
 

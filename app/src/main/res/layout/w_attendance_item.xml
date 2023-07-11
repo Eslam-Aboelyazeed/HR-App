@@ -6,7 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/w_attendance_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/rec_shape">
 
         <TextView
             android:id="@+id/attended_w_name"
@@ -17,6 +18,9 @@
             android:layout_marginBottom="16dp"
             android:textSize="30sp"
             android:textStyle="bold"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +32,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
             android:text="Arrival Time: 0"
+            android:fontFamily="@font/roboto_light"
             app:layout_constraintBottom_toTopOf="@+id/leave_time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +48,11 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:textSize="20sp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:background="@drawable/rec_shape"
             android:text="Leave Time: 0"
+            android:fontFamily="@font/roboto_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
