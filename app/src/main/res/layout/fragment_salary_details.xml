@@ -28,22 +28,49 @@
             android:id="@+id/wName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="32dp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="30sp"
             android:textStyle="bold"
             android:fontFamily="@font/roboto_light"
-            android:background="@drawable/rec_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/wName" />
+
+        <TextView
+            android:id="@+id/w_m_salary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Employee Salary"
+            android:textColor="@color/gray"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/month" />
 
         <EditText
             android:id="@+id/w_m_salary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="Employee Salary"
             android:textColorHint="@color/gray"
@@ -55,7 +82,21 @@
             android:background="@drawable/rec_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/month" />
+            app:layout_constraintTop_toBottomOf="@+id/w_m_salary_text" />
+
+        <TextView
+            android:id="@+id/w_m_days_off_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Employee Days Off"
+            android:textColor="@color/gray"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w_m_salary" />
 
         <EditText
             android:id="@+id/w_m_days_off"
@@ -73,7 +114,21 @@
             android:background="@drawable/rec_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_m_salary" />
+            app:layout_constraintTop_toBottomOf="@+id/w_m_days_off_text" />
+
+        <TextView
+            android:id="@+id/w_m_bonus_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Employee Bonuses"
+            android:textColor="@color/gray"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w_m_days_off" />
 
         <EditText
             android:id="@+id/w_m_bonus"
@@ -91,7 +146,21 @@
             android:background="@drawable/rec_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_m_days_off" />
+            app:layout_constraintTop_toBottomOf="@+id/w_m_bonus_text" />
+
+        <TextView
+            android:id="@+id/w_m_deduction_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Employee Deductions"
+            android:textColor="@color/gray"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:fontFamily="@font/roboto_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w_m_bonus" />
 
         <EditText
             android:id="@+id/w_m_deduction"
@@ -109,7 +178,7 @@
             android:background="@drawable/rec_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/w_m_bonus" />
+            app:layout_constraintTop_toBottomOf="@+id/w_m_deduction_text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/e_done_fab"
@@ -124,19 +193,5 @@
             app:layout_constraintVertical_bias="0.946"
             android:visibility="invisible"/>
 
-        <TextView
-            android:id="@+id/month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto_light"
-            android:background="@drawable/rec_shape"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/wName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

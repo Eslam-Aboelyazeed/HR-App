@@ -30,6 +30,8 @@ class CRV(val clickListener: onClickListener, val daysOfMonth: ArrayList<String>
 
         holder.day.text = currentWorker
 
+//        val fhl = hl.filter { it.day.contains(mYTV.text.toString()) }
+
         for(h in hl) {
             if (h.day == "$currentWorker " + mYTV.text.toString()) {
                 holder.h.text = "Holiday"

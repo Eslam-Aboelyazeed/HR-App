@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var loadingRec: LoadingRec
 
-    private lateinit var loadingBtn: LoadingButton
+    //private lateinit var loadingBtn: LoadingButton
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,9 +27,9 @@ class SplashActivity : AppCompatActivity() {
 
         loadingRec = findViewById(R.id.loading_rec)
 
-        loadingBtn = findViewById(R.id.loading_btn)
+       // loadingBtn = findViewById(R.id.loading_btn)
 
-        loadingBtn.isClickable = false
+       // loadingBtn.isClickable = false
 
         loadingRec.isClickable = false
 
@@ -44,9 +44,9 @@ class SplashActivity : AppCompatActivity() {
         // to send a message with a delayed time.
         //Normal Handler is deprecated , so we have to change the code little bit
 
-        animator0 = TheAnimation(loadingRec, 360f, loadingRec.width.toFloat())
+        animator0 = TheAnimation(loadingRec, -360f, loadingRec.getTheWidth())
 
-        animator0.duration = 2999
+        animator0.duration = 3000
         animator0.repeatCount = 1
         loadingRec.startAnimation(animator0)
 

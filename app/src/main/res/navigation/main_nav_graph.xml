@@ -27,12 +27,12 @@
         <action
             android:id="@+id/action_workerFragment_to_WDetailsFragment"
             app:destination="@id/WDetailsFragment" />
-        <action
-            android:id="@+id/action_workerFragment_to_calendarFragment"
-            app:destination="@id/calendarFragment" />
-        <action
-            android:id="@+id/action_workerFragment_to_salaryFragment"
-            app:destination="@id/salaryFragment" />
+<!--        <action-->
+<!--            android:id="@+id/action_workerFragment_to_calendarFragment"-->
+<!--            app:destination="@id/calendarFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_workerFragment_to_salaryFragment"-->
+<!--            app:destination="@id/salaryFragment" />-->
         <action
             android:id="@+id/action_workerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -103,11 +103,11 @@
         android:name="com.fyc.android.hrapp.SalaryFragment"
         android:label="SalaryFragment"
         tools:layout="@layout/fragment_salary">
-        <action
-            android:id="@+id/action_salaryFragment_to_workerFragment"
-            app:destination="@id/workerFragment"
-            app:popUpTo="@id/salaryFragment"
-            app:popUpToInclusive="true" />
+<!--        <action-->
+<!--            android:id="@+id/action_salaryFragment_to_workerFragment"-->
+<!--            app:destination="@id/workerFragment"-->
+<!--            app:popUpTo="@id/salaryFragment"-->
+<!--            app:popUpToInclusive="true" />-->
         <action
             android:id="@+id/action_salaryFragment_to_salaryDetailsFragment"
             app:destination="@id/salaryDetailsFragment" />

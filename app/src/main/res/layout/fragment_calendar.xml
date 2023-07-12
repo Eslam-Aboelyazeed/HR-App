@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/back"
-                android:textColor="@color/teal_700"
+                android:textColor="@color/purple_200"
                 android:backgroundTint="@color/DarkGrey"
                 android:textStyle="bold"
                 android:textSize="20sp" />
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/forward"
-                android:textColor="@color/teal_700"
+                android:textColor="@color/purple_200"
                 android:backgroundTint="@color/DarkGrey"
                 android:background="@null"
                 android:textStyle="bold"

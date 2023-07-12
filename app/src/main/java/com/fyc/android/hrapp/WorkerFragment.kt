@@ -55,13 +55,13 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
             findNavController().navigate(R.id.action_workerFragment_to_inputFragment)
         }
 
-        _binding.cFab.setOnClickListener {
-            findNavController().navigate(R.id.action_workerFragment_to_calendarFragment)
-        }
-
-        _binding.sfab.setOnClickListener {
-            findNavController().navigate(R.id.action_workerFragment_to_salaryFragment)
-        }
+//        _binding.cFab.setOnClickListener {
+//            findNavController().navigate(R.id.action_workerFragment_to_calendarFragment)
+//        }
+//
+//        _binding.sfab.setOnClickListener {
+//            findNavController().navigate(R.id.action_workerFragment_to_salaryFragment)
+//        }
 
         getLiveUpdates()
 

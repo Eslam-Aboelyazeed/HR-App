@@ -151,9 +151,9 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
         getLiveUpdatesForHolidays()
 
-        _binding.doneFab.setOnClickListener {
-            findNavController().navigate(R.id.action_salaryFragment_to_workerFragment)
-        }
+//        _binding.doneFab.setOnClickListener {
+//            findNavController().navigate(R.id.action_salaryFragment_to_workerFragment)
+//        }
 
 
 
