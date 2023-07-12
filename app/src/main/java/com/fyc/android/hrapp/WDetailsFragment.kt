@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentWDetailsBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +30,14 @@ class WDetailsFragment : Fragment() {
     private lateinit var _binding: FragmentWDetailsBinding
 
     private lateinit var worker: Worker
+
+    private lateinit var user: String
+
+    private lateinit var aList: ArrayList<Admin>
+
+    private lateinit var admin: List<Admin>
+
+    private val adminCollectionRef = Firebase.firestore.collection("admins")
 
 //    private lateinit var animator0: TheAnimation
 //
@@ -95,6 +105,14 @@ class WDetailsFragment : Fragment() {
             Toast.makeText(requireContext(), "Successfully Edited", Toast.LENGTH_LONG).show()
         }
 
+        aList = arrayListOf()
+
+        admin = listOf()
+
+        user = Firebase.auth.currentUser?.email ?: ""
+
+        getAdminsLiveUpdates()
+
 //        loadingRec = _binding.loadingRec
 //
 //        loadingRec.isClickable = false
@@ -107,6 +125,26 @@ class WDetailsFragment : Fragment() {
 //        loadingRec.startAnimation(animator0)
 
         return _binding.root
+    }
+
+    private fun getAdminsLiveUpdates(){
+
+        adminCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            aList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val admin = document.toObject<Admin>()
+                    aList.add(admin)
+                }
+            }
+            admin = aList.filter { it.email == user }
+        }
     }
 
     fun getEditedWorker(): Map<String, Any> {
@@ -244,22 +282,36 @@ class WDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.delete_worker -> {deleteWorker(worker);
-                                   findNavController().navigate(R.id.action_WDetailsFragment_to_workerFragment)}
-            R.id.edit_worker -> {_binding.wFName.isFocusableInTouchMode = true;
-                                 _binding.wLName.isFocusableInTouchMode = true;
-                                 _binding.wDob.isFocusableInTouchMode = true;
-                                 _binding.wPn.isFocusableInTouchMode = true;
-                                 _binding.wSalary.isFocusableInTouchMode= true;
-                                 _binding.wCountry.isFocusableInTouchMode= true;
-                                 _binding.wCity.isFocusableInTouchMode= true;
-                                 _binding.wGender.isFocusableInTouchMode= true;
-                                 _binding.wNationality.isFocusableInTouchMode= true;
-                                 _binding.wNationalId.isFocusableInTouchMode= true;
-                                 _binding.wHireDate.isFocusableInTouchMode= true;
-                                 _binding.wDepartment.isFocusableInTouchMode= true;
-                                 _binding.applyEditFab.isClickable = true;
-                                 _binding.applyEditFab.visibility = View.VISIBLE}
+            R.id.delete_worker -> {for (a in admin) {
+                if (a.type == "main" || a.type == "delete") {
+                    deleteWorker(worker);
+                    findNavController().navigate(R.id.action_WDetailsFragment_to_workerFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+                }
+            }
+            }
+            R.id.edit_worker -> {for (a in admin) {
+                if (a.type == "main" || a.type == "edit") {
+                    _binding.wFName.isFocusableInTouchMode = true;
+                    _binding.wLName.isFocusableInTouchMode = true;
+                    _binding.wDob.isFocusableInTouchMode = true;
+                    _binding.wPn.isFocusableInTouchMode = true;
+                    _binding.wSalary.isFocusableInTouchMode= true;
+                    _binding.wCountry.isFocusableInTouchMode= true;
+                    _binding.wCity.isFocusableInTouchMode= true;
+                    _binding.wGender.isFocusableInTouchMode= true;
+                    _binding.wNationality.isFocusableInTouchMode= true;
+                    _binding.wNationalId.isFocusableInTouchMode= true;
+                    _binding.wHireDate.isFocusableInTouchMode= true;
+                    _binding.wDepartment.isFocusableInTouchMode= true;
+                    _binding.applyEditFab.isClickable = true;
+                    _binding.applyEditFab.visibility = View.VISIBLE
+                } else {
+                    Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+                }
+            }
+            }
         }
 
         return true

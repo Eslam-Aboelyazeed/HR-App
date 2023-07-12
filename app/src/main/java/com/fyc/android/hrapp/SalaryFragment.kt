@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentSalaryBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -150,14 +151,6 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         getDaysLiveUpdates()
 
         getLiveUpdatesForHolidays()
-
-//        _binding.doneFab.setOnClickListener {
-//            findNavController().navigate(R.id.action_salaryFragment_to_workerFragment)
-//        }
-
-
-
-//        Toast.makeText(requireContext(), msList.toString(), Toast.LENGTH_LONG).show()
 
         return _binding.root
     }
@@ -369,6 +362,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 //        if (dList.contains(Worker(employee.fName,employee.lName,employee.dOB,employee.salary))){
 //            Toast.makeText(requireContext(), month, Toast.LENGTH_LONG).show()
 //        }
+
         for (w in dList) {
             if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
                     w.day.contains(month)) {

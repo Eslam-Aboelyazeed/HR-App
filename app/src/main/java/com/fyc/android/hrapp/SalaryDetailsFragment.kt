@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentSalaryDetailsBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -28,6 +29,14 @@ class SalaryDetailsFragment : Fragment() {
     private lateinit var month: String
 
     private lateinit var mSalary: String
+
+    private lateinit var user: String
+
+    private lateinit var aList: ArrayList<Admin>
+
+    private lateinit var admin: List<Admin>
+
+    private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
@@ -81,10 +90,24 @@ class SalaryDetailsFragment : Fragment() {
 //            }
 //        }
 
+        aList = arrayListOf()
+
+        admin = listOf()
+
+        user = Firebase.auth.currentUser?.email ?: ""
+
+        getAdminsLiveUpdates()
+
 
         setHasOptionsMenu(true)
 
-        updateWorkerMonthlySalary()
+        for (a in admin) {
+            if (a.type == "main" || a.type == "add" || a.type == "edit") {
+                updateWorkerMonthlySalary()
+            } else {
+                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+            }
+        }
 
         _binding.eDoneFab.setOnClickListener {
             if (//_binding.wMSalary.text.toString().isNotEmpty() &&
@@ -126,6 +149,26 @@ class SalaryDetailsFragment : Fragment() {
 
 
         return _binding.root
+    }
+
+    private fun getAdminsLiveUpdates(){
+
+        adminCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            aList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val admin = document.toObject<Admin>()
+                    aList.add(admin)
+                }
+            }
+            admin = aList.filter { it.email == user }
+        }
     }
 
     private fun saveMonthlySalary(monthSalary: MonthSalary) = CoroutineScope(Dispatchers.IO).launch {
@@ -289,14 +332,27 @@ class SalaryDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.delete_worker -> {deleteWorker(worker);
-                findNavController().navigate(R.id.action_salaryDetailsFragment_to_salaryFragment)}
-            R.id.edit_worker -> { //_binding.wMSalary.isFocusableInTouchMode = true;
-                _binding.wMDaysOff.isFocusableInTouchMode = true;
-                _binding.wMBonus.isFocusableInTouchMode = true;
-                _binding.wMDeduction.isFocusableInTouchMode = true;
-                _binding.eDoneFab.isClickable = true;
-                _binding.eDoneFab.visibility = View.VISIBLE}
+            R.id.delete_worker -> {for (a in admin) {
+                if (a.type == "main" || a.type == "delete") {
+                    deleteWorker(worker);
+                    findNavController().navigate(R.id.action_salaryDetailsFragment_to_salaryFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+                }
+            }
+            }
+            R.id.edit_worker -> {for (a in admin) {
+                if (a.type == "main" || a.type == "edit") {
+                    _binding.wMDaysOff.isFocusableInTouchMode = true;
+                    _binding.wMBonus.isFocusableInTouchMode = true;
+                    _binding.wMDeduction.isFocusableInTouchMode = true;
+                    _binding.eDoneFab.isClickable = true;
+                    _binding.eDoneFab.visibility = View.VISIBLE
+                } else {
+                    Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+                }
+            }
+            }
         }
 
         return true

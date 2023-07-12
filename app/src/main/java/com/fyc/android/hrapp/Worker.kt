@@ -71,3 +71,6 @@ data class WAttendance(
 
 @Parcelize
 data class Holidays(val day: String = ""): Parcelable
+
+@Parcelize
+data class Admin(val email: String = "", val type: String = ""): Parcelable

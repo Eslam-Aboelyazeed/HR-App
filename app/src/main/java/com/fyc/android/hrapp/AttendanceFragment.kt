@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyc.android.hrapp.databinding.FragmentAttendanceBinding
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -36,6 +37,14 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
     private lateinit var wList: ArrayList<Worker>
 
     private lateinit var day: String
+
+    private lateinit var user: String
+
+    private lateinit var aList: ArrayList<Admin>
+
+    private lateinit var admin: List<Admin>
+
+    private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
@@ -88,6 +97,13 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
         }
 
 
+        aList = arrayListOf()
+
+        admin = listOf()
+
+        user = Firebase.auth.currentUser?.email ?: ""
+
+        getAdminsLiveUpdates()
 
 
 //        getLiveUpdates()
@@ -151,6 +167,26 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 //
 //        return map
 //    }
+
+    private fun getAdminsLiveUpdates(){
+
+        adminCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            aList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val admin = document.toObject<Admin>()
+                    aList.add(admin)
+                }
+            }
+            admin = aList.filter { it.email == user }
+        }
+    }
 
     fun updateWorkerAttendance(newWorkerMap: Map<String, Any>) = CoroutineScope(Dispatchers.IO).launch {
         val workerQuery = dayCollectionRef
@@ -280,29 +316,16 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
-//
-//        inflater.inflate(R.menu.overflow_menu, menu)
-//
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//
-//        when (item.itemId) {
-//            R.id.delete_worker -> { deleteWorkerAttendance()}
-//            R.id.edit_worker -> { RV.adapter = WARV(attendedWList, allWList)
-//                                  _binding.applyEditFab.isClickable = true;
-//                                  _binding.applyEditFab.visibility = View.VISIBLE;
-//                                  _binding.addedFab.isClickable = false;
-//                                  _binding.addedFab.visibility = View.INVISIBLE}
-//        }
-//
-//        return true
-//    }
-
     override fun onItemClick(position: Int) {
-        findNavController().navigate(AttendanceFragmentDirections.actionAttendanceFragmentToADetailsFragment(allWList[position],day))
+        for (a in admin) {
+            if (a.type == "main" || a.type == "edit" || a.type == "add") {
+                findNavController().navigate(AttendanceFragmentDirections.
+                actionAttendanceFragmentToADetailsFragment(allWList[position],day))
+            } else {
+                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 }

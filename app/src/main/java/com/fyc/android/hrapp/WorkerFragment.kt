@@ -24,13 +24,19 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     private val viewModel by activityViewModels<LoginViewModel>()
 
-    private lateinit var user: String
-
     private lateinit var RV: RecyclerView
 
     private lateinit var wList: Workers
 
     private lateinit var _binding: FragmentWorkerBinding
+
+    private lateinit var user: String
+
+    private lateinit var aList: ArrayList<Admin>
+
+    private lateinit var admin: List<Admin>
+
+    private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
@@ -51,8 +57,22 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
         wList = Workers()
 
+        aList = arrayListOf()
+
+        admin = listOf()
+
+        getAdminsLiveUpdates()
+
         _binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_workerFragment_to_inputFragment)
+            admin = aList.filter { it.email == user }
+            for (a in admin) {
+                if (a.type == "main" || a.type == "add") {
+                    findNavController().navigate(R.id.action_workerFragment_to_inputFragment)
+                } else {
+                    Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+                }
+            }
+
         }
 
 //        _binding.cFab.setOnClickListener {
@@ -80,7 +100,7 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
                     "ReminderListFragment",
                     "Authentication state is $authenticationState");
                     user = Firebase.auth.currentUser?.email ?: "";
-                    Toast.makeText(requireContext(), user, Toast.LENGTH_LONG).show()
+                    //Toast.makeText(requireContext(), user, Toast.LENGTH_LONG).show()
                 }
 
                 else -> {
@@ -114,8 +134,37 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
         }
     }
 
+    private fun getAdminsLiveUpdates(){
+
+        adminCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            aList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val admin = document.toObject<Admin>()
+                    aList.add(admin)
+                }
+
+            }
+        }
+    }
+
     override fun onItemClick(position: Int) {
-        findNavController().navigate(WorkerFragmentDirections.actionWorkerFragmentToWDetailsFragment(wList[position]))
+//        admin = aList.filter { it.email == user }
+//        for (a in admin) {
+//            if (a.type == "main" || a.type == "edit" || a.type == "delete") {
+//                findNavController().navigate(R.id.action_workerFragment_to_inputFragment)
+//            } else {
+//                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+//            }
+//        }
+        findNavController().navigate(WorkerFragmentDirections
+            .actionWorkerFragmentToWDetailsFragment(wList[position]))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

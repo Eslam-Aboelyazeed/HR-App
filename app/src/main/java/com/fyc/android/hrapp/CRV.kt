@@ -32,11 +32,11 @@ class CRV(val clickListener: onClickListener, val daysOfMonth: ArrayList<String>
 
 //        val fhl = hl.filter { it.day.contains(mYTV.text.toString()) }
 
-        for(h in hl) {
-            if (h.day == "$currentWorker " + mYTV.text.toString()) {
-                holder.h.text = "Holiday"
-            }
-        }
+//        for(h in hl) {
+//            if (h.day == "$currentWorker " + mYTV.text.toString()) {
+//                holder.h.text = "Holiday"
+//            }
+//        }
 
 //        do {
 //            holder.h.text = "Holiday"
@@ -48,9 +48,9 @@ class CRV(val clickListener: onClickListener, val daysOfMonth: ArrayList<String>
             holder.h.setTextColor(Color.BLACK)
         }
 
-//        if (hl.contains(Holidays("$currentWorker " + mYTV.text.toString()))) {
-//            holder.h.text = "Holiday"
-//        }
+        if (hl.contains(Holidays("$currentWorker " + mYTV.text.toString()))) {
+            holder.h.text = "Holiday"
+        }
 
 
     }
