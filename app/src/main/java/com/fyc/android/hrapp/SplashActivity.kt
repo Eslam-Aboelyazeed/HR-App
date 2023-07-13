@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.postDelayed
 
 @Suppress("DEPRECATION")
@@ -20,10 +22,14 @@ class SplashActivity : AppCompatActivity() {
 
     //private lateinit var loadingBtn: LoadingButton
 
+    private lateinit var splashLayout: ConstraintLayout
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        splashLayout = findViewById(R.id.splash_layout)
 
         loadingRec = findViewById(R.id.loading_rec)
 
@@ -44,7 +50,9 @@ class SplashActivity : AppCompatActivity() {
         // to send a message with a delayed time.
         //Normal Handler is deprecated , so we have to change the code little bit
 
-        animator0 = TheAnimation(loadingRec, -360f, loadingRec.getTheWidth())
+        //Toast.makeText(this, splashLayout.measuredWidth.toString(), Toast.LENGTH_LONG).show()
+
+        animator0 = TheAnimation(loadingRec, -360f, loadingRec.width.toFloat())
 
         animator0.duration = 3000
         animator0.repeatCount = 1

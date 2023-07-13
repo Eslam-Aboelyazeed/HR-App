@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
@@ -26,9 +27,9 @@ class SRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
 
         holder.name.text = currentWorker.fName + " " + currentWorker.lName
 
-        val hourSalary = currentWorker.salary.toInt() / 21 / 24
+       // val hourSalary = currentWorker.salary.toInt() / 21 / 24
 
-        val daySalary = hourSalary  * 8
+       // val daySalary = hourSalary  * 8
 
         for (ms in monthSalaryList) {
             if (ms.fName == currentWorker.fName && ms.lName == currentWorker.lName &&
@@ -82,7 +83,7 @@ class SRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
 
         val salary : TextView = itemView.findViewById(R.id.worker_salary)
 
-        val salaryItem : ConstraintLayout = itemView.findViewById(R.id.w_salary_item)
+        val salaryItem : CardView = itemView.findViewById(R.id.w_salary_item)
 
         init {
             salaryItem.setOnClickListener(this)

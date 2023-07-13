@@ -50,6 +50,8 @@ class SalaryDetailsFragment : Fragment() {
 
     private lateinit var hList: ArrayList<Holidays>
 
+    private lateinit var dList: ArrayList<Worker>
+
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +67,8 @@ class SalaryDetailsFragment : Fragment() {
         mSalary = arguments.let { SalaryDetailsFragmentArgs.fromBundle(it!!).mSalary }
 
         msList = arrayListOf()
+
+        dList = arrayListOf()
 
         hList = arrayListOf()
 
@@ -98,16 +102,17 @@ class SalaryDetailsFragment : Fragment() {
 
         getAdminsLiveUpdates()
 
+        updateWorkerMonthlySalary()
 
         setHasOptionsMenu(true)
 
-        for (a in admin) {
-            if (a.type == "main" || a.type == "add" || a.type == "edit") {
-                updateWorkerMonthlySalary()
-            } else {
-                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
-            }
-        }
+//        for (a in admin) {
+//            if (a.type == "main" || a.type == "add" || a.type == "edit") {
+//                updateWorkerMonthlySalary()
+//            } else {
+//                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+//            }
+//        }
 
         _binding.eDoneFab.setOnClickListener {
             if (//_binding.wMSalary.text.toString().isNotEmpty() &&
@@ -266,6 +271,28 @@ class SalaryDetailsFragment : Fragment() {
         } else {
             withContext(Dispatchers.Main) {
                 //Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun getDaysLiveUpdates(){
+
+        dayCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
+
+            dList.clear()
+            firebaseFirestoreException?.let {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                return@addSnapshotListener
+            }
+
+            querySnapshot?.let {
+                for (document in it){
+                    val worker = document.toObject<Worker>()
+//                    if (wList.find { it.fName == worker.fName }?.fName == worker.fName)
+                    dList.add(worker)
+
+                }
+
             }
         }
     }

@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
@@ -106,9 +107,9 @@ class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>
 
         val arrivalTime : TextView = itemView.findViewById(R.id.arrival_time)
 
-        val leaveTime : TextView= itemView.findViewById(R.id.leave_time)
+        val leaveTime : TextView = itemView.findViewById(R.id.leave_time)
 
-        val workerItem : ConstraintLayout= itemView.findViewById(R.id.w_attendance_item)
+        val workerItem : CardView = itemView.findViewById(R.id.w_attendance_item)
 
 
         init {

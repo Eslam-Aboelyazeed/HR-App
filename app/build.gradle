@@ -83,6 +83,10 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
 
+    // image picker
+//    implementation 'com.github.florent37:inline-activity-result-kotlin:1.0.4'
+//    implementation 'com.github.dhaval2404:imagepicker-support:1.7.1'
+
 //    // Dagger Hilt
 //    implementation 'com.google.dagger:hilt-android:2.44'
 //    kapt 'com.google.dagger:hilt-android-compiler:2.44'

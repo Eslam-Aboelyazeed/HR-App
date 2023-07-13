@@ -91,7 +91,17 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(requireContext(), aList[position].type, Toast.LENGTH_LONG).show()
+        //Toast.makeText(requireContext(), aList[position].type, Toast.LENGTH_LONG).show()
+        admin = aList.filter { it.email == user }
+        for (a in admin) {
+            if (a.type == "main") {
+                findNavController().navigate(AdminFragmentDirections
+                    .actionAdminFragmentToAdminDetailsFragment(aList[position]))
+            } else {
+                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
 }

@@ -17,13 +17,12 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import java.util.Calendar
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 
 class SalaryFragment : Fragment(), SRV.onClickListener {
 
@@ -182,6 +181,20 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         }
     }
 
+    private fun saveDailySalary(worker: Worker) = CoroutineScope(Dispatchers.IO).launch {
+
+        try {
+            dayCollectionRef.add(worker).await()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(),"Successfully Added The Meal",Toast.LENGTH_LONG).show()
+            }
+        } catch (e:Exception){
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(),e.message,Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     private fun getLiveUpdatesForHolidays(){
 
         holidaysCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
@@ -292,7 +305,11 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
         } else {
             withContext(Dispatchers.Main) {
-                Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+                //Toast.makeText(requireContext(), "No Worker Matched The Query", Toast.LENGTH_LONG).show()
+                saveDailySalary(Worker(worker.fName,worker.lName,worker.dOB,worker.salary,
+                    worker.pNumber,worker.country,worker.city,worker.gender,worker.nationality,
+                    worker.nationalId,worker.hireDate,worker.aTime,worker.lTime,worker.department,
+                    worker.day,dSalary))
             }
         }
     }
@@ -353,33 +370,73 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         }
     }
 
-    override fun onItemClick(position: Int) {
-
-        val employee = wList[position]
-//        var monthSalary = 0
-        msSalary = 0
-
-//        if (dList.contains(Worker(employee.fName,employee.lName,employee.dOB,employee.salary))){
-//            Toast.makeText(requireContext(), month, Toast.LENGTH_LONG).show()
-//        }
-
+    suspend fun calculate (worker: Worker) = CoroutineScope(Dispatchers.IO).launch {
         for (w in dList) {
-            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
-                    w.day.contains(month)) {
+            if (w.fName == worker.fName && w.lName == worker.lName && w.dOB == worker.dOB &&
+                w.day.contains(month)) {
                 val hourSalary = w.salary.toInt() / 21 / 24
                 val dayHours = w.lTime - w.aTime
                 val daySalary = hourSalary  * dayHours
                 updateWorkerDailySalary(w, daySalary.toString())
 //                dSalary = w.dSalary.toInt()
             }
+
         }
 
-        for (w in dList) {
-            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
-                w.day.contains(month)) {
-                msSalary+= w.dSalary.toInt()
+//        for (w in dList) {
+//            if (w.fName == worker.fName && w.lName == worker.lName &&
+//                w.dOB == worker.dOB && w.day.contains(month) && w.dSalary != "") {
+//                dSalary = w.dSalary.toInt()
+//                msSalary += dSalary
+//            }
+//        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onItemClick(position: Int) {
+
+        val employee = wList[position]
+//        var monthSalary = 0
+        msSalary = 0
+
+        GlobalScope.launch {
+            withContext(Dispatchers.IO){
+                calculate(employee)
+
+                delay(1000)
+                for (w in dList) {
+                if (w.fName == employee.fName && w.lName == employee.lName &&
+                    w.dOB == employee.dOB && w.day.contains(month) && w.dSalary != "") {
+                    dSalary = w.dSalary.toInt()
+                    msSalary += dSalary
+                }
             }
+
+            }
+
+            withContext(Dispatchers.Main){
+                findNavController().navigate(SalaryFragmentDirections
+                .actionSalaryFragmentToSalaryDetailsFragment(employee, month, msSalary.toString()))
+
+            }
+
         }
+
+//        if (dList.contains(Worker(employee.fName,employee.lName,employee.dOB,employee.salary))){
+//            Toast.makeText(requireContext(), month, Toast.LENGTH_LONG).show()
+//        }
+
+//        for (w in dList) {
+//            if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
+//                    w.day.contains(month)) {
+//                val hourSalary = w.salary.toInt() / 21 / 24
+//                val dayHours = w.lTime - w.aTime
+//                val daySalary = hourSalary  * dayHours
+//                updateWorkerDailySalary(w, daySalary.toString())
+////                dSalary = w.dSalary.toInt()
+//            }
+//
+//        }
 
         for (w in msList) {
             if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
@@ -402,13 +459,27 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
             if (h.day.contains(month) && h.day.contains(year.toString())) {
                 val hourSalary = employee.salary.toInt() / 21 / 24
                 val daySalary = hourSalary  * 8
-                s += 1
+                s = 1
                 msSalary += (s * daySalary)
             }
         }
 
-        findNavController().navigate(SalaryFragmentDirections
-            .actionSalaryFragmentToSalaryDetailsFragment(employee, month, msSalary.toString()))
+
+//            for (w in dList) {
+//                if (w.fName == employee.fName && w.lName == employee.lName &&
+//                    w.dOB == employee.dOB && w.day.contains(month) && w.dSalary != "") {
+//                    dSalary = w.dSalary.toInt()
+//                    msSalary += dSalary
+//                }
+//            }
+
+
+//        Timer().schedule(200) {
+//            findNavController().navigate(SalaryFragmentDirections
+//            .actionSalaryFragmentToSalaryDetailsFragment(employee, month, msSalary.toString()))
+
+
+
 
 //        if (msList.toString().contains(employee.fName) &&
 //            msList.toString().contains(employee.lName) && msList.toString().contains(employee.dOB)){

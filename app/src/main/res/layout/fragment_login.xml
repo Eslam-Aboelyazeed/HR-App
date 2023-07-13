@@ -41,7 +41,7 @@
             android:textAlignment="center"
             android:textStyle="italic"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:text="Pioneers Integrated Programming Solutions"
             android:fontFamily="@font/roboto_light"
             app:layout_constraintEnd_toEndOf="parent"

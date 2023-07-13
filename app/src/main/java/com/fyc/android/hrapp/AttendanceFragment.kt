@@ -130,13 +130,13 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 ////            RV.adapter = WRV(this, attendedWList)
 //        }
 
-        _binding.addedFab.setOnClickListener {
+//        _binding.addedFab.setOnClickListener {
 //            val map: Map<String, ArrayList<Worker>>
 //            map = mutableMapOf()
 //            map[day] = attendedWList
 //            saveAttendance(WAttendance(day, wList))
-            findNavController().navigate(R.id.action_attendanceFragment_to_calendarFragment)
-        }
+//            findNavController().navigate(R.id.action_attendanceFragment_to_calendarFragment)
+//        }
 
 
         return _binding.root

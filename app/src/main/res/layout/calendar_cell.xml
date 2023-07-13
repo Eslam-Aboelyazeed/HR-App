@@ -32,11 +32,10 @@
             android:fontFamily="@font/roboto_light"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cellDayText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

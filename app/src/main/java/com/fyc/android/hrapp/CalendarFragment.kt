@@ -35,6 +35,8 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
 
     private lateinit var monthYearText: TextView
 
+    private lateinit var daysInMonth: ArrayList<String>
+
     private val holidaysCollectionRef = Firebase.firestore.collection("holidays")
 
     private lateinit var hList: ArrayList<Holidays>
@@ -61,7 +63,9 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
 
         hList = arrayListOf()
 
-        getLiveUpdates()
+        daysInMonth = arrayListOf()
+
+//        getLiveUpdates()
 
         month = ""
 
@@ -108,6 +112,8 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
 
         setMonthView()
 
+        getLiveUpdates()
+
         _binding.backBtn.setOnClickListener{
             previousMonthAction()
         }
@@ -127,21 +133,21 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     @RequiresApi(Build.VERSION_CODES.O)
     fun setMonthView() {
 
-        getLiveUpdates()
+//        getLiveUpdates()
 
         monthYearText.text = monthYearFromDate(selectedDate)
 
-        val daysInMonth: ArrayList<String> = daysInMonthArray(selectedDate)
+         daysInMonth = daysInMonthArray(selectedDate)
 
-        val calendarAdapter: CRV = CRV(this, daysInMonth, day,
-            "$month $year", _binding.monthYearTV, hList)
+//        val calendarAdapter: CRV = CRV(this, daysInMonth, day,
+//            "$month $year", _binding.monthYearTV, hList)
 
         val manager = GridLayoutManager(activity, 7)
 
         RV.setHasFixedSize(true)
 
         RV.layoutManager = manager
-        RV.adapter = calendarAdapter
+//        RV.adapter = calendarAdapter
 
     }
 
@@ -213,6 +219,9 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
                 }
 
             }
+            val calendarAdapter: CRV = CRV(this, daysInMonth, day,
+                "$month $year", _binding.monthYearTV, hList)
+            RV.adapter = calendarAdapter
         }
     }
 
