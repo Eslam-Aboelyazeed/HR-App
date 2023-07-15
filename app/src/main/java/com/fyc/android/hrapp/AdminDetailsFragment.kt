@@ -6,6 +6,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentAdminDetailsBinding
@@ -118,6 +119,25 @@ class AdminDetailsFragment : Fragment() {
         }
     }
 
+    fun confirmAction(message: String, onConfirm: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton("Yes") { dialog, id ->
+            onConfirm()
+        }
+        builder.setNegativeButton("No") { dialog, id ->
+            dialog.dismiss()
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
+        fun deletingAdmin() {
+            deleteAdmin(admin)
+            findNavController().navigate(R.id.action_adminDetailsFragment_to_adminFragment)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
 
         inflater.inflate(R.menu.delete_menu, menu)
@@ -129,8 +149,7 @@ class AdminDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.delete_admin -> {deleteAdmin(admin)
-            findNavController().navigate(R.id.action_adminDetailsFragment_to_adminFragment)}
+            R.id.delete_admin -> confirmAction("Deleting Admin, Confirm?") {deletingAdmin()}
         }
         return true
     }

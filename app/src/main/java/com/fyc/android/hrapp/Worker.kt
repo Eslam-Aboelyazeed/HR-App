@@ -21,7 +21,9 @@ data class Worker(
                   var department: String = "",
                   var day: String = "",
                   var dSalary: String = "",
-                  var mSalary: String = ""
+                  var mSalary: String = "",
+                  var aTimemin: String = "00",
+                  var lTimemin: String = "00"
 ): Parcelable
 
 @Parcelize

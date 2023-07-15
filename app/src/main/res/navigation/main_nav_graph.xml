@@ -50,6 +50,9 @@
         <argument
             android:name="workers_list"
             app:argType="com.fyc.android.hrapp.Worker" />
+        <action
+            android:id="@+id/action_WDetailsFragment_to_WAttendedDaysFragment"
+            app:destination="@id/WAttendedDaysFragment" />
 
     </fragment>
     <fragment
@@ -173,5 +176,14 @@
         <argument
             android:name="admin"
             app:argType="com.fyc.android.hrapp.Admin" />
+    </fragment>
+    <fragment
+        android:id="@+id/WAttendedDaysFragment"
+        android:name="com.fyc.android.hrapp.WAttendedDaysFragment"
+        android:label="WAttendedDaysFragment"
+        tools:layout="@layout/fragment_w_attended_days">
+        <argument
+            android:name="employee"
+            app:argType="com.fyc.android.hrapp.Worker" />
     </fragment>
 </navigation>

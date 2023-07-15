@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -154,6 +155,20 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
         }
     }
 
+    fun confirmAction(message: String, onConfirm: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton("Yes") { dialog, id ->
+            onConfirm()
+        }
+        builder.setNegativeButton("No") { dialog, id ->
+            dialog.dismiss()
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
     override fun onItemClick(position: Int) {
 //        admin = aList.filter { it.email == user }
 //        for (a in admin) {
@@ -167,6 +182,11 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
             .actionWorkerFragmentToWDetailsFragment(wList[position]))
     }
 
+    fun loggingOut() {
+        AuthUI.getInstance().signOut(requireContext())
+        findNavController().navigate(R.id.action_workerFragment_to_loginFragment)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
 
@@ -175,9 +195,8 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.logout -> {
-                AuthUI.getInstance().signOut(requireContext())
-                findNavController().navigate(R.id.action_workerFragment_to_loginFragment)
+            R.id.logout -> { confirmAction("Logging out, Confirm?") { loggingOut() }
+
             }
         }
         return super.onOptionsItemSelected(item)

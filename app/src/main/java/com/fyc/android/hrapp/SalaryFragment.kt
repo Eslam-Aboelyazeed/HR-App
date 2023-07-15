@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedDispatcher
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,8 @@ import kotlin.concurrent.schedule
 class SalaryFragment : Fragment(), SRV.onClickListener {
 
     private lateinit var _binding: FragmentSalaryBinding
+
+    private lateinit var animator1: LoadingAnimation
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
@@ -392,12 +395,23 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 //        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     @OptIn(DelicateCoroutinesApi::class)
     override fun onItemClick(position: Int) {
 
         val employee = wList[position]
 //        var monthSalary = 0
         msSalary = 0
+
+        _binding.wSalaryList.visibility = View.GONE
+        _binding.loading.visibility = View.VISIBLE
+
+        animator1 = LoadingAnimation(_binding.loading, -360f)
+
+        animator1.duration = 1000
+        animator1.repeatCount = 1
+        _binding.loading.startAnimation(animator1)
+
 
         GlobalScope.launch {
             withContext(Dispatchers.IO){

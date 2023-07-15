@@ -1,6 +1,7 @@
 package com.fyc.android.hrapp
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,12 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>, val wList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
 
@@ -23,6 +27,7 @@ class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>
         return RVViewHolder(itemView)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: RVViewHolder, position: Int) {
 
@@ -41,11 +46,15 @@ class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>
             if (w.fName == currentWorker.fName && w.lName == currentWorker.lName &&
                 w.dOB == currentWorker.dOB) {
 
-                holder.arrivalTime.text = "Arrival Time: " + w.aTime
+//                val localDateTime1 = LocalDateTime.parse(w.aTime.toString())
+//                val localDateTime2 = LocalDateTime.parse(w.lTime.toString())
+//                val formatter = DateTimeFormatter.ofPattern("HH:MM")
+//                val output1 = formatter.format(localDateTime1)
+//                val output2 = formatter.format(localDateTime2)
 
-                holder.leaveTime.text = "Leave Time: " + w.lTime
+                holder.arrivalTime.text = "Arrival Time: " + w.aTime + ":" + w.aTimemin
 
-
+                holder.leaveTime.text = "Leave Time: " + w.lTime + ":" + w.lTimemin
 
             }
 //            else {

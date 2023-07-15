@@ -8,6 +8,7 @@ import android.os.Looper
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -113,16 +114,10 @@ class WDetailsFragment : Fragment() {
 
         getAdminsLiveUpdates()
 
-//        loadingRec = _binding.loadingRec
-//
-//        loadingRec.isClickable = false
-//
-//        animator0 = TheAnimation(loadingRec, loadingRec.width.toFloat())
-//
-//        animator0.duration = 1999
-//        animator0.repeatCount = 1
-//
-//        loadingRec.startAnimation(animator0)
+        _binding.wAttendedDaysBtn.setOnClickListener {
+            findNavController().navigate(
+                WDetailsFragmentDirections.actionWDetailsFragmentToWAttendedDaysFragment(worker))
+        }
 
         return _binding.root
     }
@@ -271,6 +266,25 @@ class WDetailsFragment : Fragment() {
         }
     }
 
+    fun confirmAction(message: String, onConfirm: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton("Yes") { dialog, id ->
+            onConfirm()
+        }
+        builder.setNegativeButton("No") { dialog, id ->
+            dialog.dismiss()
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    fun deletingWorker() {
+        deleteWorker(worker);
+        findNavController().navigate(R.id.action_WDetailsFragment_to_workerFragment)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
 
         inflater.inflate(R.menu.overflow_menu, menu)
@@ -284,8 +298,7 @@ class WDetailsFragment : Fragment() {
         when (item.itemId) {
             R.id.delete_worker -> {for (a in admin) {
                 if (a.type == "main" || a.type == "delete") {
-                    deleteWorker(worker);
-                    findNavController().navigate(R.id.action_WDetailsFragment_to_workerFragment)
+                    confirmAction("Deleting Employee, Confirm?") {deletingWorker()}
                 } else {
                     Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
                 }

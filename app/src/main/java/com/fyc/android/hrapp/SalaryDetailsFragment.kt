@@ -7,6 +7,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.fyc.android.hrapp.databinding.FragmentSalaryDetailsBinding
@@ -133,6 +134,8 @@ class SalaryDetailsFragment : Fragment() {
                     _binding.wMDeduction.isFocusable = false
                     _binding.eDoneFab.isClickable = false
                     _binding.eDoneFab.visibility = View.INVISIBLE
+                    findNavController().navigate(
+                        R.id.action_salaryDetailsFragment_to_salaryFragment)
                 } else {
                     val s = mSalary.toInt() + _binding.wMBonus.text.toString().toInt() -
                             _binding.wMDeduction.text.toString().toInt()
@@ -145,6 +148,8 @@ class SalaryDetailsFragment : Fragment() {
                     _binding.wMDeduction.isFocusable = false
                     _binding.eDoneFab.isClickable = false
                     _binding.eDoneFab.visibility = View.INVISIBLE
+                    findNavController().navigate(
+                        R.id.action_salaryDetailsFragment_to_salaryFragment)
                 }
             } else {
                 Toast.makeText(
@@ -348,6 +353,25 @@ class SalaryDetailsFragment : Fragment() {
         }
     }
 
+    fun confirmAction(message: String, onConfirm: () -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(message)
+        builder.setCancelable(false)
+        builder.setPositiveButton("Yes") { dialog, id ->
+            onConfirm()
+        }
+        builder.setNegativeButton("No") { dialog, id ->
+            dialog.dismiss()
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    fun deletingWorker() {
+        deleteWorker(worker)
+        findNavController().navigate(R.id.action_salaryDetailsFragment_to_salaryFragment)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater){
 
         inflater.inflate(R.menu.overflow_menu, menu)
@@ -361,8 +385,7 @@ class SalaryDetailsFragment : Fragment() {
         when (item.itemId) {
             R.id.delete_worker -> {for (a in admin) {
                 if (a.type == "main" || a.type == "delete") {
-                    deleteWorker(worker);
-                    findNavController().navigate(R.id.action_salaryDetailsFragment_to_salaryFragment)
+                    confirmAction("Deleting Employee Salary, Confirm?") {deletingWorker()}
                 } else {
                     Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
                 }
