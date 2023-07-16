@@ -253,7 +253,7 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
                 for (document in it){
                     val worker = document.toObject<Worker>()
                     allWList.add(worker)
-                    RV.adapter = ARV(this, allWList, wList)
+                    RV.adapter = ARV(this, allWList.sortedBy { it.fName }, wList)
                 }
 
             }

@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
-class WRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>): RecyclerView.Adapter<WRV.RVViewHolder>(){
+class WRV(val clickListener: onClickListener, val workerList: List<Worker>): RecyclerView.Adapter<WRV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {

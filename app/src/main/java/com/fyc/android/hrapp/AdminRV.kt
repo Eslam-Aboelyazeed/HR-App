@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class AdminRV(val clickListener: onClickListener, val adminList: ArrayList<Admin>): RecyclerView.Adapter<AdminRV.RVViewHolder>(){
+class AdminRV(val clickListener: onClickListener, val adminList: List<Admin>): RecyclerView.Adapter<AdminRV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {

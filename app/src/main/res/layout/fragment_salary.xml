@@ -37,11 +37,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/w_salary_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/all_employees_salaries" />
+            app:layout_constraintTop_toBottomOf="@+id/all_employees_salaries"
+            tools:listitem="@layout/w_salary_item"/>
 
 <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
 <!--            android:id="@+id/done_fab"-->

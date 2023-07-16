@@ -83,7 +83,7 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
                 for (document in it){
                     val admin = document.toObject<Admin>()
                     aList.add(admin)
-                    RV.adapter = AdminRV(this, aList)
+                    RV.adapter = AdminRV(this, aList.sortedBy { it.email })
                 }
 
             }

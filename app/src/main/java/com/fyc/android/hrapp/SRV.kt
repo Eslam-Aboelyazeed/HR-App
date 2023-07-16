@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class SRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>, val monthSalaryList: ArrayList<MonthSalary>, val month: String): RecyclerView.Adapter<SRV.RVViewHolder>(){
+class SRV(val clickListener: onClickListener, val workerList: List<Worker>, val monthSalaryList: ArrayList<MonthSalary>, val month: String): RecyclerView.Adapter<SRV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {

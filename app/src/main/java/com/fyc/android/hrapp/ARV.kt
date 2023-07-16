@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ARV(val clickListener: onClickListener, val aWorkerList: ArrayList<Worker>, val wList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
+class ARV(val clickListener: onClickListener, val aWorkerList: List<Worker>, val wList: ArrayList<Worker>): RecyclerView.Adapter<ARV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {

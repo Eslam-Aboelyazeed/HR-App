@@ -233,7 +233,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
                     val worker = document.toObject<Worker>()
 //                    if (wList.find { it.fName == worker.fName }?.fName == worker.fName)
                     wList.add(worker)
-                    RV.adapter = SRV(this, wList, msList, month)
+                    RV.adapter = SRV(this, wList.sortedBy { it.fName }, msList, month)
                 }
 
             }
