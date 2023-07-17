@@ -50,7 +50,9 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
         RV = _binding.workersList
 
-        val manager = LinearLayoutManager(activity)
+//        val manager = LinearLayoutManager(activity)
+
+        val manager = GridLayoutManager(activity, 2)
 
         RV.layoutManager = manager
 
@@ -128,7 +130,7 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
                 for (document in it){
                     val worker = document.toObject<Worker>()
                     wList.add(worker)
-                    RV.adapter = WRV(this, wList.sortedBy { it.fName })
+                    RV.adapter = WRV(this, wList.sortedBy { it.fName }, requireContext())
                 }
 
             }

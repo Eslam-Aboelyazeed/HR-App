@@ -1,5 +1,6 @@
 package com.fyc.android.hrapp
 
+import android.net.Uri
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -23,7 +24,8 @@ data class Worker(
                   var dSalary: String = "",
                   var mSalary: String = "",
                   var aTimemin: String = "00",
-                  var lTimemin: String = "00"
+                  var lTimemin: String = "00",
+                  var imguri: String = ""
 ): Parcelable
 
 @Parcelize

@@ -21,11 +21,22 @@
             android:padding="10dp"
             android:background="@drawable/rec_shape5">
 
+            <ImageView
+                android:id="@+id/worker_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_person_outline"/>
+
             <TextView
                 android:id="@+id/worker_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@drawable/oval_shape"
                 android:fontFamily="@font/roboto_light"
                 android:gravity="center"
                 android:textAlignment="center"
