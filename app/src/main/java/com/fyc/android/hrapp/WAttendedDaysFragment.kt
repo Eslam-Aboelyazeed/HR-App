@@ -209,6 +209,7 @@ class WAttendedDaysFragment : Fragment() {
             R.id.nov -> filterMonth("Nov")
             R.id.dec -> filterMonth("Dec")
             R.id.all_year -> filterAllYear()
+            else -> return super.onContextItemSelected(item)
         }
         return true
     }

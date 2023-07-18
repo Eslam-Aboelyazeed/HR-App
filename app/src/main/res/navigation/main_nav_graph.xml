@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/inputFragment"
         android:name="com.fyc.android.hrapp.InputFragment"
-        android:label="InputFragment"
+        android:label="Input Employee"
         tools:layout="@layout/fragment_input">
         <action
             android:id="@+id/action_inputFragment_to_workerFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/workerFragment"
         android:name="com.fyc.android.hrapp.WorkerFragment"
-        android:label="WorkerFragment"
+        android:label="Employees List"
         tools:layout="@layout/fragment_worker">
         <action
             android:id="@+id/action_workerFragment_to_inputFragment"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/WDetailsFragment"
         android:name="com.fyc.android.hrapp.WDetailsFragment"
-        android:label="WDetailsFragment"
+        android:label="Employee Details"
         tools:layout="@layout/fragment_w_details">
         <action
             android:id="@+id/action_WDetailsFragment_to_workerFragment"
@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.fyc.android.hrapp.CalendarFragment"
-        android:label="CalendarFragment"
+        android:label="Calendar"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_attendanceFragment"
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/attendanceFragment"
         android:name="com.fyc.android.hrapp.AttendanceFragment"
-        android:label="AttendanceFragment"
+        android:label="Employees Attendance"
         tools:layout="@layout/fragment_attendance">
         <action
             android:id="@+id/action_attendanceFragment_to_calendarFragment"
@@ -87,7 +87,7 @@
     <fragment
         android:id="@+id/ADetailsFragment"
         android:name="com.fyc.android.hrapp.ADetailsFragment"
-        android:label="ADetailsFragment"
+        android:label="Employee Attendance Details"
         tools:layout="@layout/fragment_a_details">
         <argument
             android:name="worker"
@@ -104,7 +104,7 @@
     <fragment
         android:id="@+id/salaryFragment"
         android:name="com.fyc.android.hrapp.SalaryFragment"
-        android:label="SalaryFragment"
+        android:label="Employees Salaries List"
         tools:layout="@layout/fragment_salary">
 <!--        <action-->
 <!--            android:id="@+id/action_salaryFragment_to_workerFragment"-->
@@ -118,7 +118,7 @@
     <fragment
         android:id="@+id/salaryDetailsFragment"
         android:name="com.fyc.android.hrapp.SalaryDetailsFragment"
-        android:label="SalaryDetailsFragment"
+        android:label="Employee Salary Details"
         tools:layout="@layout/fragment_salary_details">
         <action
             android:id="@+id/action_salaryDetailsFragment_to_salaryFragment"
@@ -138,7 +138,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.fyc.android.hrapp.LoginFragment"
-        android:label="fragment_login"
+        android:label="Login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/adminFragment"
@@ -155,7 +155,7 @@
     <fragment
         android:id="@+id/adminInputFragment"
         android:name="com.fyc.android.hrapp.AdminInputFragment"
-        android:label="AdminInputFragment"
+        android:label="Input Admin"
         tools:layout="@layout/fragment_admin_input">
         <action
             android:id="@+id/action_adminInputFragment_to_adminFragment"
@@ -166,7 +166,7 @@
     <fragment
         android:id="@+id/adminDetailsFragment"
         android:name="com.fyc.android.hrapp.AdminDetailsFragment"
-        android:label="AdminDetailsFragment"
+        android:label="Admin Details"
         tools:layout="@layout/fragment_admin_details">
         <action
             android:id="@+id/action_adminDetailsFragment_to_adminFragment"
@@ -180,7 +180,7 @@
     <fragment
         android:id="@+id/WAttendedDaysFragment"
         android:name="com.fyc.android.hrapp.WAttendedDaysFragment"
-        android:label="WAttendedDaysFragment"
+        android:label="Employee Attended Days"
         tools:layout="@layout/fragment_w_attended_days">
         <argument
             android:name="employee"

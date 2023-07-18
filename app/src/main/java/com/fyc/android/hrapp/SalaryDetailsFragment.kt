@@ -121,7 +121,7 @@ class SalaryDetailsFragment : Fragment() {
                 _binding.wMBonus.text.toString().isNotEmpty() &&
                 _binding.wMDeduction.text.toString().isNotEmpty()) {
                 if (_binding.wMDaysOff.text.toString().toInt() >= 1) {
-                    val hourSalary = worker.salary.toInt() / 21 / 24
+                    val hourSalary = worker.salary.toInt() / 21 / 8
                     val daySalary = hourSalary  * 8
                     val s = mSalary.toInt() + daySalary + _binding.wMBonus.text.toString().toInt() -
                             _binding.wMDeduction.text.toString().toInt()
@@ -403,6 +403,7 @@ class SalaryDetailsFragment : Fragment() {
                 }
             }
             }
+            else -> return super.onContextItemSelected(item)
         }
 
         return true

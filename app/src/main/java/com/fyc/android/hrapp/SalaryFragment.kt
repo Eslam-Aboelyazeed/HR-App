@@ -377,7 +377,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         for (w in dList) {
             if (w.fName == worker.fName && w.lName == worker.lName && w.dOB == worker.dOB &&
                 w.day.contains(month)) {
-                val hourSalary = w.salary.toInt() / 21 / 24
+                val hourSalary = w.salary.toInt() / 21 / 8
                 val dayHours = w.lTime - w.aTime
                 val daySalary = hourSalary  * dayHours
                 updateWorkerDailySalary(w, daySalary.toString())
@@ -456,7 +456,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
             if (w.fName == employee.fName && w.lName == employee.lName && w.dOB == employee.dOB &&
                 w.month == month && w.daysoff != "" && w.bonus != "" && w.deduction != "") {
                 if (w.daysoff.toInt() >= 1) {
-                    val hourSalary = employee.salary.toInt() / 21 / 24
+                    val hourSalary = employee.salary.toInt() / 21 / 8
                     val daySalary = hourSalary  * 8
                     val s = msSalary + daySalary + w.bonus.toInt() - w.deduction.toInt()
                     msSalary = s
@@ -471,7 +471,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
         for (h in hList) {
             if (h.day.contains(month) && h.day.contains(year.toString())) {
-                val hourSalary = employee.salary.toInt() / 21 / 24
+                val hourSalary = employee.salary.toInt() / 21 / 8
                 val daySalary = hourSalary  * 8
                 s = 1
                 msSalary += (s * daySalary)

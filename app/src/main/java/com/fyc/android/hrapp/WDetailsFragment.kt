@@ -403,6 +403,7 @@ class WDetailsFragment : Fragment() {
                 }
             }
             }
+            else -> return super.onContextItemSelected(item)
         }
 
         return true

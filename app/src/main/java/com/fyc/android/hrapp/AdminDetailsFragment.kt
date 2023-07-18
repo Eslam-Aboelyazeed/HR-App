@@ -150,6 +150,7 @@ class AdminDetailsFragment : Fragment() {
 
         when (item.itemId) {
             R.id.delete_admin -> confirmAction("Deleting Admin, Confirm?") {deletingAdmin()}
+            else -> return super.onContextItemSelected(item)
         }
         return true
     }
