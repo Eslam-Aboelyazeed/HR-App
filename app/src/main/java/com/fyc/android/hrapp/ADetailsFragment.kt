@@ -136,10 +136,24 @@ class ADetailsFragment : Fragment() {
 //                    val formatter = DateTimeFormatter.ofPattern("HH.MM")
 //                    val output1 = formatter.format(localDateTime1)
 //                    val output2 = formatter.format(localDateTime2)
+
+                    if (_binding.wATimeMin.text.toString() == "0" || _binding.wATimeMin.text.toString() == "00"){
+                        dayCollectionRef.document(document.id).update("atimemin","00")
+                    }else {
+                        dayCollectionRef.document(document.id).update("atimemin",_binding.wATimeMin.text.toString().toInt().toString())
+                    }
+
+                    if (_binding.wLTimeMin.text.toString() == "0" || _binding.wLTimeMin.text.toString() == "00"){
+                        dayCollectionRef.document(document.id).update("ltimemin","00")
+                    }else {
+                        dayCollectionRef.document(document.id).update("ltimemin",_binding.wLTimeMin.text.toString().toInt().toString())
+                    }
+
                     dayCollectionRef.document(document.id).update("atime",_binding.wATime.text.toString().toInt())
-                    dayCollectionRef.document(document.id).update("atimemin",_binding.wATimeMin.text.toString().toInt().toString())
+
                     dayCollectionRef.document(document.id).update("ltime",_binding.wLTime.text.toString().toInt())
-                    dayCollectionRef.document(document.id).update("ltimemin",_binding.wLTimeMin.text.toString().toInt().toString())
+
+
 //                    dayCollectionRef.document(document.id).set(
 //                        newWorkerMap, SetOptions.merge()
 //                    ).await()

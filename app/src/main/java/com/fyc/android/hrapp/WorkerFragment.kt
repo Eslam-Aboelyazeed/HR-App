@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -37,6 +39,8 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     private lateinit var admin: List<Admin>
 
+    private lateinit var wl: List<Worker>
+
     private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
@@ -47,6 +51,11 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
     ): View? {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_worker, container, false)
+
+        //fragmentManager?.let { clearBackStack(it) }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+        }
 
         RV = _binding.workersList
 
@@ -61,6 +70,8 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
         wList = Workers()
 
         aList = arrayListOf()
+
+        wl = listOf()
 
         admin = listOf()
 
@@ -130,10 +141,12 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
                 for (document in it){
                     val worker = document.toObject<Worker>()
                     wList.add(worker)
-                    RV.adapter = WRV(this, wList.sortedBy { it.fName }, requireContext())
-                }
 
+                }
             }
+            wl = wList.sortedBy { it.fName }
+
+            RV.adapter = WRV(this, arrayListOf(*wl.toTypedArray()), requireContext())
         }
     }
 
@@ -154,6 +167,13 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
                 }
 
             }
+        }
+    }
+
+    fun clearBackStack(fragmentManager: FragmentManager) {
+        if (fragmentManager.backStackEntryCount > 1) {
+            val entry = fragmentManager.getBackStackEntryAt(1)
+            fragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
@@ -180,8 +200,9 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 //                Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
 //            }
 //        }
+
         findNavController().navigate(WorkerFragmentDirections
-            .actionWorkerFragmentToWDetailsFragment(wList[position]))
+            .actionWorkerFragmentToWDetailsFragment(wl[position]))
     }
 
     fun loggingOut() {

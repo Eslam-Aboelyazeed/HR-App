@@ -14,7 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class WRV(val clickListener: onClickListener, val workerList: List<Worker>, val context: Context): RecyclerView.Adapter<WRV.RVViewHolder>(){
+class WRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>, val context: Context): RecyclerView.Adapter<WRV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {

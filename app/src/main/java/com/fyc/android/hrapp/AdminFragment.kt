@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +30,8 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
 
     private lateinit var admin: List<Admin>
 
+    private lateinit var wl: List<Admin>
+
     private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     override fun onCreateView(
@@ -38,7 +42,15 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_admin, container, false)
 
+        //fragmentManager?.let { clearBackStack(it) }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.workerFragment, false)
+        }
+
         aList = arrayListOf()
+
+        wl = listOf()
 
         RV = _binding.adminsList
 
@@ -83,10 +95,19 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
                 for (document in it){
                     val admin = document.toObject<Admin>()
                     aList.add(admin)
-                    RV.adapter = AdminRV(this, aList.sortedBy { it.email })
+
                 }
 
             }
+            wl = aList.sortedBy { it.email }
+            RV.adapter = AdminRV(this, wl)
+        }
+    }
+
+    fun clearBackStack(fragmentManager: FragmentManager) {
+        if (fragmentManager.backStackEntryCount > 1) {
+            val entry = fragmentManager.getBackStackEntryAt(1)
+            fragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
@@ -96,7 +117,7 @@ class AdminFragment : Fragment(), AdminRV.onClickListener {
         for (a in admin) {
             if (a.type == "main") {
                 findNavController().navigate(AdminFragmentDirections
-                    .actionAdminFragmentToAdminDetailsFragment(aList[position]))
+                    .actionAdminFragmentToAdminDetailsFragment(wl[position]))
             } else {
                 Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
             }

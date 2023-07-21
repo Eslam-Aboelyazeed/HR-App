@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,6 +62,12 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
     ): View? {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_calendar, container, false)
+
+        //fragmentManager?.let { clearBackStack(it) }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.workerFragment, false)
+        }
 
         hList = arrayListOf()
 
@@ -225,6 +233,13 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
         }
     }
 
+    fun clearBackStack(fragmentManager: FragmentManager) {
+        if (fragmentManager.backStackEntryCount > 1) {
+            val entry = fragmentManager.getBackStackEntryAt(1)
+            fragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
     override fun onDayClick(day: String, position: Int) {
         if (day != "") {
 //            Toast.makeText(requireContext(), "Selected Date  $day  ${monthYearFromDate(selectedDate)}", Toast.LENGTH_LONG).show()
@@ -249,10 +264,6 @@ class CalendarFragment : Fragment(), CRV.onClickListener {
                     )
                 )
             }
-
-
-
-
 
 //            val dy = "$day ${monthYearFromDate(selectedDate)}"
 //              Toast.makeText(requireContext(), d, Toast.LENGTH_LONG).show()

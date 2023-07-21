@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedDispatcher
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +51,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
     private lateinit var hList: ArrayList<Holidays>
 
+    private lateinit var wl: List<Worker>
+
     private val c  = Calendar.getInstance()
 
     private val year  = c.get(Calendar.YEAR)
@@ -72,6 +76,12 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_salary, container, false)
 
+        //fragmentManager?.let { clearBackStack(it) }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().popBackStack(R.id.workerFragment, false)
+        }
+
         RV = _binding.wSalaryList
 
         val manager = LinearLayoutManager(activity)
@@ -87,6 +97,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
         msList = arrayListOf()
 
         hList = arrayListOf()
+
+        wl = listOf()
 
 //        val c  = Calendar.getInstance()
 //
@@ -233,10 +245,12 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
                     val worker = document.toObject<Worker>()
 //                    if (wList.find { it.fName == worker.fName }?.fName == worker.fName)
                     wList.add(worker)
-                    RV.adapter = SRV(this, wList.sortedBy { it.fName }, msList, month)
+
                 }
 
             }
+            wl = wList.sortedBy { it.fName }
+            RV.adapter = SRV(this, wl, msList, month)
         }
     }
 
@@ -345,6 +359,13 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 //        }
 //    }
 
+    fun clearBackStack(fragmentManager: FragmentManager) {
+        if (fragmentManager.backStackEntryCount > 1) {
+            val entry = fragmentManager.getBackStackEntryAt(1)
+            fragmentManager.popBackStack(entry.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
     fun updateWorkerMonthlySalary(monthSalary: MonthSalary, mSalary: String) = CoroutineScope(Dispatchers.IO).launch {
         val workerQuery = salaryCollectionRef
             .whereEqualTo("fname", monthSalary.fName)
@@ -399,7 +420,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onItemClick(position: Int) {
 
-        val employee = wList[position]
+        val employee = wl[position]
 //        var monthSalary = 0
         msSalary = 0
 

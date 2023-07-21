@@ -44,6 +44,8 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
 
     private lateinit var admin: List<Admin>
 
+    private lateinit var wl: List<Worker>
+
     private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
@@ -76,6 +78,8 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
         RV.setHasFixedSize(true)
 
         allWList = arrayListOf()
+
+        wl = listOf()
 
 //        attendedWList = AttendedWorkers()
 
@@ -253,10 +257,12 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
                 for (document in it){
                     val worker = document.toObject<Worker>()
                     allWList.add(worker)
-                    RV.adapter = ARV(this, allWList.sortedBy { it.fName }, wList)
+
                 }
 
             }
+            wl = allWList.sortedBy { it.fName }
+            RV.adapter = ARV(this, wl, wList)
         }
 //        for (worker in allWList) {
 //            attendedWList.add(AttendedWorker(worker.fName,worker.lName,worker.dOB,worker.salary,
@@ -320,7 +326,7 @@ class AttendanceFragment : Fragment(), ARV.onClickListener {
         for (a in admin) {
             if (a.type == "main" || a.type == "edit" || a.type == "add") {
                 findNavController().navigate(AttendanceFragmentDirections.
-                actionAttendanceFragmentToADetailsFragment(allWList[position],day))
+                actionAttendanceFragmentToADetailsFragment(wl[position],day))
             } else {
                 Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
             }
