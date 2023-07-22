@@ -2,10 +2,8 @@ package com.fyc.android.hrapp
 
 import android.os.Build
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
@@ -158,6 +156,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 //            }
 //        }
 
+        setHasOptionsMenu(true)
+
         getMonthLiveUpdates()
 
         getLiveUpdates()
@@ -250,7 +250,8 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
             }
             wl = wList.sortedBy { it.fName }
-            RV.adapter = SRV(this, wl, msList, month)
+            val ms = msList.filter { it.month.contains("$month $year") }
+            RV.adapter = SRV(this, wl, arrayListOf(*ms.toTypedArray()), "$month $year", false)
         }
     }
 
@@ -451,7 +452,7 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
             withContext(Dispatchers.Main){
                 findNavController().navigate(SalaryFragmentDirections
-                .actionSalaryFragmentToSalaryDetailsFragment(employee, month, msSalary.toString()))
+                .actionSalaryFragmentToSalaryDetailsFragment(employee, "$month $year", msSalary.toString()))
 
             }
 
@@ -595,6 +596,78 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
 
 
 
+    }
+
+    fun filterAllYear() {
+        //_binding.wSalaryList.isEnabled = false
+
+        val msy = msList.filter { it.month.contains(year.toString()) }
+
+        RV.adapter = SRV(this, wl, arrayListOf(*msy.toTypedArray()), year.toString(), true)
+
+        RV.isFocusable = false
+
+        RV.isClickable = false
+
+        RV.isEnabled = false
+
+        _binding.allEmployeesSalaries.text = ""
+    }
+
+    fun filterMonth(mon: String) {
+        val msm = msList.filter { it.month.contains("$mon $year") }
+
+        if (month.contains(mon)) {
+
+            RV.adapter = SRV(this, wl, arrayListOf(*msm.toTypedArray()), "$mon $year", false)
+
+            RV.isFocusableInTouchMode = true
+
+            RV.isClickable = true
+
+            RV.isEnabled = true
+
+            _binding.allEmployeesSalaries.text = "Tap on the Employee's Name to Calculate Their Salary "
+
+        } else {
+
+            //_binding.wSalaryList.isEnabled = false
+
+            RV.adapter = SRV(this, wl, arrayListOf(*msm.toTypedArray()), "$mon $year", true)
+
+            RV.isFocusable = false
+
+            RV.isClickable = false
+
+            RV.isEnabled = false
+
+            _binding.allEmployeesSalaries.text = ""
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.filter_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.jan -> filterMonth("January")
+            R.id.feb -> filterMonth("February")
+            R.id.mar -> filterMonth("March")
+            R.id.apr -> filterMonth("April")
+            R.id.may -> filterMonth("May")
+            R.id.jun -> filterMonth("June")
+            R.id.jul -> filterMonth("July")
+            R.id.aug -> filterMonth("August")
+            R.id.sep -> filterMonth("September")
+            R.id.oct -> filterMonth("October")
+            R.id.nov -> filterMonth("November")
+            R.id.dec -> filterMonth("December")
+            R.id.all_year -> filterAllYear()
+            else -> return super.onContextItemSelected(item)
+        }
+        return true
     }
 
 }

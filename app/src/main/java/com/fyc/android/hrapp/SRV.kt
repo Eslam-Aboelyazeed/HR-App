@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class SRV(val clickListener: onClickListener, val workerList: List<Worker>, val monthSalaryList: ArrayList<MonthSalary>, val month: String): RecyclerView.Adapter<SRV.RVViewHolder>(){
+class SRV(val clickListener: onClickListener, val workerList: List<Worker>, val monthSalaryList: ArrayList<MonthSalary>, val month: String, val bool : Boolean): RecyclerView.Adapter<SRV.RVViewHolder>(){
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RVViewHolder {
@@ -31,9 +31,15 @@ class SRV(val clickListener: onClickListener, val workerList: List<Worker>, val 
 
        // val daySalary = hourSalary  * 8
 
+        var ys = 0
+
+        if(bool) {
+            holder.salaryItem.isClickable = false
+        }
+
         for (ms in monthSalaryList) {
             if (ms.fName == currentWorker.fName && ms.lName == currentWorker.lName &&
-                ms.dOB == currentWorker.dOB && ms.month == month) {
+                ms.dOB == currentWorker.dOB) {
 //                if (ms.daysoff != "" && ms.bonus != "") {
 //                    if (ms.daysoff.toInt() >= 1) {
 //                        val s = ms.salary.toInt() + daySalary + ms.bonus.toInt()
@@ -43,8 +49,13 @@ class SRV(val clickListener: onClickListener, val workerList: List<Worker>, val 
 //                        holder.salary.text = "This Month Salary: $s"
 //                    }
 //                } else {
-                    holder.salary.text = "This Month Salary: " + ms.salary
-//                }
+                //ms.salary += ms.salary.toInt()
+                if (month[0] == "2"[0]) {
+                    ys += ms.salary.toInt()
+                    holder.salary.text = "$month Salary: $ys"
+                } else {
+                holder.salary.text = "$month Salary: " + ms.salary
+                }
             }
         }
 
