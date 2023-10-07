@@ -34,8 +34,8 @@ class WRV(val clickListener: onClickListener, val workerList: ArrayList<Worker>,
         Glide.with(context)
             .load(Uri.parse(currentWorker.imguri))
             .override(200,200)
-            .error(R.drawable.ic_person_outline)
-            .placeholder(R.drawable.ic_person_outline)
+            .error(R.drawable.ic_person_outline).override(200, 200)
+            .placeholder(R.drawable.ic_person_outline).override(200, 200)
             .into(holder.img)
 
     }

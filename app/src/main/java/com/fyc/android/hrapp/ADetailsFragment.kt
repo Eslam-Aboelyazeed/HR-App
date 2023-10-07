@@ -1,6 +1,7 @@
 package com.fyc.android.hrapp
 
 import android.annotation.SuppressLint
+import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class ADetailsFragment : Fragment() {
 
@@ -47,6 +49,11 @@ class ADetailsFragment : Fragment() {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_a_details, container, false)
 
+        _binding.wATime.isFocusable = false
+        _binding.wATimeMin.isFocusable = false
+        _binding.wLTime.isFocusable = false
+        _binding.wLTimeMin.isFocusable = false
+
         worker = arguments?.let { ADetailsFragmentArgs.fromBundle(it).worker }!!
 
         day = arguments.let { ADetailsFragmentArgs.fromBundle(it!!).day }
@@ -65,6 +72,40 @@ class ADetailsFragment : Fragment() {
 //            _binding.wLTime.setText(w.lTime)
 //            _binding.wLTimeMin.setText(w.lTimemin)
 //        }
+
+        val aTimePickerDialog = TimePickerDialog(
+            requireContext(),
+            R.style.Theme_AppCompat_DayNight_Dialog_Alert,
+            { view, hourOfDay, minute ->
+                // Handle the selected time.
+                _binding.wATime.setText(hourOfDay.toString())
+                _binding.wATimeMin.setText(minute.toString())
+            },
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY), // Initial hour of the day.
+            Calendar.getInstance().get(Calendar.MINUTE), // Initial minute of the hour.
+            true // Whether to use the 24-hour format.
+        )
+
+        _binding.aTimePicker.setOnClickListener {
+            aTimePickerDialog.show()
+        }
+
+        val lTimePickerDialog = TimePickerDialog(
+            requireContext(),
+            R.style.Theme_AppCompat_DayNight_Dialog_Alert,
+            { view, hourOfDay, minute ->
+                // Handle the selected time.
+                _binding.wLTime.setText(hourOfDay.toString())
+                _binding.wLTimeMin.setText(minute.toString())
+            },
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY), // Initial hour of the day.
+            Calendar.getInstance().get(Calendar.MINUTE), // Initial minute of the hour.
+            true // Whether to use the 24-hour format.
+        )
+
+        _binding.lTimePicker.setOnClickListener {
+            lTimePickerDialog.show()
+        }
 
 
         _binding.applyEditFab.setOnClickListener {

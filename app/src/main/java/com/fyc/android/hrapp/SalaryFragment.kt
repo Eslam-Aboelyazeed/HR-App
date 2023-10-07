@@ -421,6 +421,10 @@ class SalaryFragment : Fragment(), SRV.onClickListener {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onItemClick(position: Int) {
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+
+        }
+
         val employee = wl[position]
 //        var monthSalary = 0
         msSalary = 0

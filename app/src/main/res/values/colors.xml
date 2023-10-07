@@ -13,4 +13,5 @@
     <color name="colorPrimaryDark">#004349</color>
     <color name="colorAccent">#F9A825</color>
     <color name="DarkGrey">#121212</color>
+    <color name="red">#840000</color>
 </resources>

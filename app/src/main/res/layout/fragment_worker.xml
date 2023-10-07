@@ -8,6 +8,64 @@
         android:layout_height="match_parent"
         android:background="@color/DarkGrey">
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            app:singleLine="true"
+            app:singleSelection="true"
+            app:chipSpacingHorizontal="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/customChipStyle">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All Employees"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                style="@style/customChipStyle" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deb. A"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                style="@style/customChipStyle"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deb. B"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                style="@style/customChipStyle"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deb. C"
+                android:clickable="true"
+                android:focusable="true"
+                android:checkable="true"
+                style="@style/customChipStyle"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
         <TextView
             android:id="@+id/all_employees"
             android:layout_width="wrap_content"
@@ -21,7 +79,7 @@
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/chip_group" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/workersList"

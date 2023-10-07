@@ -133,7 +133,7 @@
 
                     <EditText
                         android:id="@+id/w_dob"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
@@ -143,6 +143,7 @@
                         android:hint="Date Of Birth (DD/MM/YYYY)"
                         android:inputType="date"
                         android:minHeight="48dp"
+                        android:minWidth="280dp"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
@@ -150,38 +151,55 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/w_dob_text" />
 
+                    <Button
+                        android:id="@+id/w_dob_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/teal_200"
+                        android:minWidth="48dp"
+                        android:minHeight="60dp"
+                        app:icon="@drawable/ic_calendar"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/w_dob"
+                        app:layout_constraintTop_toBottomOf="@+id/w_dob_text" />
+
                     <TextView
-                        android:id="@+id/w_pn_text"
+                        android:id="@+id/w_gender_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/roboto_light"
-                        android:text="Employee Phone Number :"
+                        android:text="Employee Gender :"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/w_dob"/>
 
-                    <EditText
-                        android:id="@+id/w_pn"
+                    <Spinner
+                        android:id="@+id/w_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/rec_shape"
+                        android:backgroundTint="@color/purple_200"
                         android:fontFamily="@font/roboto_light"
-                        android:hint="Phone Number"
-                        android:inputType="phone"
+                        android:hint="Gender"
+                        android:inputType="text"
                         android:minHeight="48dp"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_pn_text" />
+                        app:layout_constraintTop_toBottomOf="@+id/w_gender_text" />
 
                     <TextView
                         android:id="@+id/w_salary_text"
@@ -195,7 +213,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_pn"/>
+                        app:layout_constraintTop_toBottomOf="@+id/w_gender"/>
 
                     <EditText
                         android:id="@+id/w_salary"
@@ -217,13 +235,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/w_salary_text" />
 
                     <TextView
-                        android:id="@+id/w_gender_text"
+                        android:id="@+id/w_pn_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/roboto_light"
-                        android:text="Employee Gender :"
+                        android:text="Employee Phone Number :"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@color/white"
@@ -231,7 +249,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/w_salary"/>
 
                     <EditText
-                        android:id="@+id/w_gender"
+                        android:id="@+id/w_pn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -239,7 +257,40 @@
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/rec_shape"
                         android:fontFamily="@font/roboto_light"
-                        android:hint="Gender"
+                        android:hint="Phone Number"
+                        android:inputType="phone"
+                        android:minHeight="48dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/w_pn_text" />
+
+                    <TextView
+                        android:id="@+id/w_country_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Employee Country :"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/w_pn"/>
+
+                    <EditText
+                        android:id="@+id/w_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/rec_shape"
+                        android:fontFamily="@font/roboto_light"
+                        android:hint="Country"
                         android:inputType="text"
                         android:minHeight="48dp"
                         android:textAlignment="center"
@@ -247,40 +298,7 @@
                         android:textColorHint="@color/gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_gender_text" />
-
-                    <TextView
-                        android:id="@+id/w_nationalId_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Employee National ID :"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_gender"/>
-
-                    <EditText
-                        android:id="@+id/w_nationalId"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/rec_shape"
-                        android:fontFamily="@font/roboto_light"
-                        android:hint="National ID"
-                        android:inputType="number"
-                        android:minHeight="48dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/gray"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_nationalId_text" />
+                        app:layout_constraintTop_toBottomOf="@+id/w_country_text" />
 
                     <TextView
                         android:id="@+id/w_city_text"
@@ -294,7 +312,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_nationalId"/>
+                        app:layout_constraintTop_toBottomOf="@+id/w_country"/>
 
                     <EditText
                         android:id="@+id/w_city"
@@ -317,6 +335,39 @@
                         app:layout_constraintTop_toBottomOf="@+id/w_city_text" />
 
                     <TextView
+                        android:id="@+id/w_department_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Employee Department :"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/w_city"/>
+
+                    <Spinner
+                        android:id="@+id/w_department"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/purple_200"
+                        android:fontFamily="@font/roboto_light"
+                        android:hint="Department"
+                        android:inputType="text"
+                        android:minHeight="48dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/gray"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/w_department_text" />
+
+                    <TextView
                         android:id="@+id/w_hireDate_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -328,11 +379,11 @@
                         android:textSize="16sp"
                         android:textColor="@color/white"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_city"/>
+                        app:layout_constraintTop_toBottomOf="@+id/w_department"/>
 
                     <EditText
                         android:id="@+id/w_hireDate"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
@@ -342,11 +393,29 @@
                         android:hint="Hire Date (DD/MM/YYYY)"
                         android:inputType="date"
                         android:minHeight="48dp"
+                        android:minWidth="280dp"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/w_hireDate_text" />
+
+                    <Button
+                        android:id="@+id/w_hireDate_picker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="20dp"
+                        android:backgroundTint="@color/teal_200"
+                        android:minWidth="48dp"
+                        android:minHeight="60dp"
+                        app:icon="@drawable/ic_calendar"
+                        app:iconPadding="0dp"
+                        app:iconTint="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/w_hireDate"
                         app:layout_constraintTop_toBottomOf="@+id/w_hireDate_text" />
 
                     <TextView
@@ -383,13 +452,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/w_nationality_text" />
 
                     <TextView
-                        android:id="@+id/w_country_text"
+                        android:id="@+id/w_nationalId_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="@font/roboto_light"
-                        android:text="Employee Country :"
+                        android:text="Employee National ID :"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@color/white"
@@ -397,40 +466,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/w_nationality"/>
 
                     <EditText
-                        android:id="@+id/w_country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/rec_shape"
-                        android:fontFamily="@font/roboto_light"
-                        android:hint="Country"
-                        android:inputType="text"
-                        android:minHeight="48dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/gray"
-                        android:textSize="18sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_country_text" />
-
-                    <TextView
-                        android:id="@+id/w_department_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Employee Department :"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_country"/>
-
-                    <EditText
-                        android:id="@+id/w_department"
+                        android:id="@+id/w_nationalId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -439,15 +475,15 @@
                         android:layout_marginBottom="48dp"
                         android:background="@drawable/rec_shape"
                         android:fontFamily="@font/roboto_light"
-                        android:hint="Department"
-                        android:inputType="text"
+                        android:hint="National ID"
+                        android:inputType="number"
                         android:minHeight="48dp"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textColorHint="@color/gray"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/w_department_text"
+                        app:layout_constraintTop_toBottomOf="@+id/w_nationalId_text"
                         app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

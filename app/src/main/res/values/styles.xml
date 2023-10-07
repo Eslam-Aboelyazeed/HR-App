@@ -25,4 +25,13 @@
         <item name="android:statusBarColor">@color/purple_200</item>
     </style>
 
+    <style name="Theme.AppCompat.DayNight.Dialog.Alert" parent="Theme.AppCompat.Dialog.Alert">
+        <!-- ... customize the theme here ... -->
+        <item name="android:background">@color/purple_200</item>
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
+
+    <style name="customChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@drawable/color_state_list</item>
+    </style>
 </resources>

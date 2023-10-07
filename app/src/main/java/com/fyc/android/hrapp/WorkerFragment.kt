@@ -1,22 +1,27 @@
 package com.fyc.android.hrapp
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.CompoundButton
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+//import androidx.core.content.ContextCompat.getColorStateList
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.fyc.android.hrapp.databinding.FragmentWorkerBinding
+import com.google.android.material.chip.Chip
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -41,16 +46,28 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     private lateinit var wl: List<Worker>
 
+    private lateinit var fl: List<Worker>
+
+    private lateinit var colorStateList: ColorStateList
+
     private val adminCollectionRef = Firebase.firestore.collection("admins")
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
+    @SuppressLint("SetTextI18n", "ResourceType")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_worker, container, false)
+
+
+//        _binding.chipGroup.clearCheck()
+//        _binding.chipAll.isChecked = true
+//        _binding.chipA.isChecked = false
+//        _binding.chipB.isChecked = false
+//        _binding.chipC.isChecked = false
 
         //fragmentManager?.let { clearBackStack(it) }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
@@ -73,6 +90,8 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
         wl = listOf()
 
+        fl = listOf()
+
         admin = listOf()
 
         getAdminsLiveUpdates()
@@ -89,6 +108,207 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
         }
 
+        getLiveUpdates()
+//        val listener: CompoundButton.OnCheckedChangeListener = CompoundButton.OnCheckedChangeListener() { compoundButton: CompoundButton, b: Boolean ->
+//
+//        }
+//        _binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+//            val selectedFilters = checkedIds.map { group.findViewById<Chip>(it).text.toString() }
+//
+//            when (selectedFilters) {
+//                listOf("chipAll") -> {RV.adapter = WRV(this, arrayListOf(*wl.toTypedArray()), requireContext())
+//                _binding.chipAll.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)}
+//                listOf("chipA") -> {filterByDepartment("Deb. A")
+//                _binding.chipA.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)}
+//                listOf("chipB") -> {filterByDepartment("Deb. B")
+//                _binding.chipB.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)}
+//                listOf("chipC") -> {filterByDepartment("Deb. C")
+//                _binding.chipC.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)}
+//                else -> RV.adapter = WRV(this, arrayListOf(*wl.toTypedArray()), requireContext())
+//            }
+//        }
+
+        colorStateList = ContextCompat.getColorStateList(requireContext(), R.drawable.color_state_list)!!
+//        _binding.chipAll.chipBackgroundColor = colorStateList
+//        _binding.chipA.chipBackgroundColor = colorStateList
+//        _binding.chipB.chipBackgroundColor = colorStateList
+//        _binding.chipC.chipBackgroundColor = colorStateList
+
+//        if (_binding.chipAll.isChecked) {
+//            fl = wl
+//            RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "All Employees"
+//        } else if (_binding.chipA.isChecked) {
+//            filterByDepartment("Deb. A")
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. A Employees"
+//        } else if (_binding.chipB.isChecked) {
+//            filterByDepartment("Deb. B")
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. B Employees"
+//        } else if (_binding.chipC.isChecked) {
+//            filterByDepartment("Deb. C")
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. C Employees"
+//        } else {
+//            fl = wl
+//            RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "All Employees"
+//        }
+
+        _binding.chipAll.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                _binding.chipAll.isEnabled = false
+                _binding.chipAll.isClickable = false
+                //_binding.chipAll.isFocusable = false
+                fl = wl
+                RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "All Employees"
+            } else {
+                _binding.chipAll.isEnabled = true
+                _binding.chipAll.isClickable = true
+                //_binding.chipAll.isFocusableInTouchMode = true
+            }
+        }
+
+        _binding.chipA.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                filterByDepartment("Deb. A")
+                _binding.chipA.isEnabled = false
+                _binding.chipA.isClickable = false
+                //_binding.chipA.isFocusable = false
+                filterByDepartment("Deb. A")
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. A Employees"
+                filterByDepartment("Deb. A")
+            } else {
+                _binding.chipA.isEnabled = true
+                _binding.chipA.isClickable = true
+                //_binding.chipA.isFocusableInTouchMode = true
+            }
+        }
+
+        _binding.chipB.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                _binding.chipB.isEnabled = false
+                _binding.chipB.isClickable = false
+               // _binding.chipB.isFocusable = false
+                filterByDepartment("Deb. B")
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. B Employees"
+            } else {
+                _binding.chipB.isEnabled = true
+                _binding.chipB.isClickable = true
+               // _binding.chipB.isFocusableInTouchMode = true
+            }
+        }
+
+        _binding.chipC.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                _binding.chipC.isEnabled = false
+                _binding.chipC.isClickable = false
+                //_binding.chipC.isFocusable = false
+                filterByDepartment("Deb. C")
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. C Employees"
+//                Toast.makeText(requireContext(), fl.toString(), Toast.LENGTH_LONG).show()
+            } else {
+                _binding.chipC.isEnabled = true
+                _binding.chipC.isClickable = true
+                //_binding.chipC.isFocusableInTouchMode = true
+            }
+        }
+
+//        if (_binding.chipAll.isChecked) {
+//            _binding.chipAll.isEnabled = false
+//            _binding.chipAll.isClickable = false
+//            _binding.chipAll.isFocusable = false
+//        } else {
+            _binding.chipAll.setOnClickListener {
+                fl = wl
+                RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "All Employees"
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipAll.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)
+            }
+//        }
+
+//        if (_binding.chipA.isChecked) {
+//            _binding.chipA.isEnabled = false
+//            _binding.chipA.isClickable = false
+//            _binding.chipA.isFocusable = false
+//        } else {
+            _binding.chipA.setOnClickListener {
+                //Toast.makeText(requireContext(), "test", Toast.LENGTH_LONG).show()
+                filterByDepartment("Deb. A")
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. A Employees"
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipA.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)
+            }
+//        }
+
+//        if (_binding.chipB.isChecked) {
+//            _binding.chipB.isEnabled = false
+//            _binding.chipB.isClickable = false
+//            _binding.chipB.isFocusable = false
+//        } else {
+            _binding.chipB.setOnClickListener {
+                filterByDepartment("Deb. B")
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.chipC.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. B Employees"
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)
+            }
+//        }
+
+//        if (_binding.chipC.isChecked) {
+//            _binding.chipC.isEnabled = false
+//            _binding.chipC.isClickable = false
+//            _binding.chipC.isFocusable = false
+//        } else {
+            _binding.chipC.setOnClickListener {
+                filterByDepartment("Deb. C")
+                _binding.chipA.chipBackgroundColor = colorStateList
+                _binding.chipB.chipBackgroundColor = colorStateList
+                _binding.chipAll.chipBackgroundColor = colorStateList
+                _binding.allEmployees.text = "Deb. C Employees"
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = ContextCompat.getColorStateList(requireContext(), R.color.teal_700)
+//            _binding.chipC.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+//            _binding.chipC.setBackgroundColor(resources.getColor(R.color.purple_200))
+            }
+//        }
+
 //        _binding.cFab.setOnClickListener {
 //            findNavController().navigate(R.id.action_workerFragment_to_calendarFragment)
 //        }
@@ -97,15 +317,52 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 //            findNavController().navigate(R.id.action_workerFragment_to_salaryFragment)
 //        }
 
-        getLiveUpdates()
-
         setHasOptionsMenu(true)
 
         return _binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        _binding.chipGroup.clearCheck()
+
+//        if (_binding.chipAll.isChecked) {
+//            fl = wl
+//            RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "All Employees"
+//        } else if (_binding.chipA.isChecked) {
+//            filterByDepartment("Deb. A")
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. A Employees"
+//        } else if (_binding.chipB.isChecked) {
+//            filterByDepartment("Deb. B")
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. B Employees"
+//        } else if (_binding.chipC.isChecked) {
+//            filterByDepartment("Deb. C")
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "Deb. C Employees"
+//            Toast.makeText(requireContext(), fl.toString(), Toast.LENGTH_LONG).show()
+//        } else {
+//            fl = wl
+//            RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+//            _binding.chipAll.chipBackgroundColor = colorStateList
+//            _binding.chipA.chipBackgroundColor = colorStateList
+//            _binding.chipB.chipBackgroundColor = colorStateList
+//            _binding.chipC.chipBackgroundColor = colorStateList
+//            _binding.allEmployees.text = "All Employees"
+//        }
 
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
 
@@ -127,6 +384,12 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 
     }
 
+    private fun filterByDepartment(dep:String) {
+        fl = wl.filter { it.department == dep }
+        //Toast.makeText(requireContext(), wl.toString(), Toast.LENGTH_LONG).show()
+        RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+    }
+
     private fun getLiveUpdates(){
 
         workerCollectionRef.addSnapshotListener{querySnapshot, firebaseFirestoreException ->
@@ -145,8 +408,18 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
                 }
             }
             wl = wList.sortedBy { it.fName }
-
-            RV.adapter = WRV(this, arrayListOf(*wl.toTypedArray()), requireContext())
+            fl = wl
+            if (_binding.chipAll.isChecked) {
+                RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+            } else if (_binding.chipA.isChecked) {
+                filterByDepartment("Deb. A")
+            }else if (_binding.chipB.isChecked) {
+                filterByDepartment("Deb. B")
+            }else if (_binding.chipC.isChecked) {
+                filterByDepartment("Deb. C")
+            }else {
+                RV.adapter = WRV(this, arrayListOf(*fl.toTypedArray()), requireContext())
+            }
         }
     }
 
@@ -202,7 +475,7 @@ class WorkerFragment : Fragment(), WRV.onClickListener {
 //        }
 
         findNavController().navigate(WorkerFragmentDirections
-            .actionWorkerFragmentToWDetailsFragment(wl[position]))
+            .actionWorkerFragmentToWDetailsFragment(fl[position]))
     }
 
     fun loggingOut() {

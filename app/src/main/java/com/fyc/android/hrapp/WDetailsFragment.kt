@@ -3,8 +3,10 @@ package com.fyc.android.hrapp
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,7 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.view.*
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -32,8 +34,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
+import kotlin.collections.ArrayList
 
-class WDetailsFragment : Fragment() {
+class WDetailsFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private val workerCollectionRef = Firebase.firestore.collection("workers")
 
@@ -51,12 +57,15 @@ class WDetailsFragment : Fragment() {
 
     private val adminCollectionRef = Firebase.firestore.collection("admins")
 
+    private lateinit var dobPickerDialog: DatePickerDialog
+    private lateinit var hdPickerDialog: DatePickerDialog
+
 //    private lateinit var animator0: TheAnimation
 //
 //    private lateinit var loadingRec: LoadingRec
 
     @RequiresApi(Build.VERSION_CODES.M)
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,17 +83,124 @@ class WDetailsFragment : Fragment() {
         _binding.wSalary.isFocusable = false
         _binding.wCountry.isFocusable = false
         _binding.wCity.isFocusable = false
-        _binding.wGender.isFocusable = false
+        _binding.wGender.isEnabled = false
         _binding.wNationality.isFocusable = false
         _binding.wNationalId.isFocusable = false
         _binding.wHireDate.isFocusable = false
-        _binding.wDepartment.isFocusable = false
+        _binding.wDepartment.isEnabled = false
         _binding.changeImgBtn.isEnabled = false
+        _binding.wDobPicker.isEnabled = false
+        _binding.wHireDatePicker.isEnabled = false
+        _binding.changeImgBtn.setBackgroundColor(resources.getColor(R.color.gray))
+        _binding.wDobPicker.setBackgroundColor(resources.getColor(R.color.gray))
+        _binding.wHireDatePicker.setBackgroundColor(resources.getColor(R.color.gray))
+        _binding.wGender.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
+        _binding.wDepartment.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
+//        _binding.wGender.setBackgroundColor(resources.getColor(R.color.gray))
+//        _binding.wDepartment.setBackgroundColor(resources.getColor(R.color.gray))
 //        _binding.changeImgBtn.isFocusable = false
 //        _binding.changeImgBtn.isClickable = false
-        _binding.changeImgBtn.setBackgroundColor(resources.getColor(R.color.gray))
+
+
+        val options = arrayOf("Pick a Gender", "Male", "Female")
+
+        val spinnerAdapter= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, options) {
+
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                view.setBackgroundColor(resources.getColor(R.color.purple_200))
+                //set the color of first item in the drop down list to gray
+                if(position == 0) {
+                    view.setBackgroundColor(resources.getColor(R.color.DarkGrey))
+                    view.setTextColor(Color.GRAY)
+                } else {
+                    //here it is possible to define color for other items by
+                    view.setTextColor(Color.WHITE)
+                }
+                return view
+            }
+
+        }
+
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        _binding.wGender.adapter = spinnerAdapter
+
+        _binding.wGender.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if(view != null) {
+                    if(value == options[0]) {
+                        (view as TextView).setTextColor(Color.WHITE)
+                    } else {
+                        (view as TextView).setTextColor(Color.WHITE)
+                    }
+//                    (view as TextView).setTextColor(Color.WHITE)
+                }
+            }
+        }
+
+        val items = arrayOf("Choose a Department", "Deb. A", "Deb. B", "Deb. C")
+
+        val hSpinnerAdapter= object : ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_item, items) {
+
+            override fun isEnabled(position: Int): Boolean {
+                // Disable the first item from Spinner
+                // First item will be used for hint
+                return position != 0
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val view: TextView = super.getDropDownView(position, convertView, parent) as TextView
+                view.setBackgroundColor(resources.getColor(R.color.purple_200))
+                //set the color of first item in the drop down list to gray
+                if(position == 0) {
+                    view.setBackgroundColor(resources.getColor(R.color.DarkGrey))
+                    view.setTextColor(Color.GRAY)
+                } else {
+                    //here it is possible to define color for other items by
+                    view.setTextColor(Color.WHITE)
+                }
+                return view
+            }
+
+        }
+
+        hSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        _binding.wDepartment.adapter = hSpinnerAdapter
+
+        _binding.wDepartment.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val value = parent!!.getItemAtPosition(position).toString()
+                if (view != null) {
+                    if(value == items[0]) {
+                        (view as TextView).setTextColor(Color.WHITE)
+                    } else {
+                        (view as TextView).setTextColor(Color.WHITE)
+                    }
+//                    (view as TextView).setTextColor(Color.WHITE)
+                }
+            }
+        }
 
         worker = arguments?.let { WDetailsFragmentArgs.fromBundle(it).workersList }!!
+
+        val gIndex = options.indexOf(worker.gender)
+
+        val hIndex = items.indexOf(worker.department)
 
         _binding.wFName.setText(worker.fName)
         _binding.wLName.setText(worker.lName)
@@ -93,11 +209,11 @@ class WDetailsFragment : Fragment() {
         _binding.wSalary.setText(worker.salary)
         _binding.wCountry.setText(worker.country)
         _binding.wCity.setText(worker.city)
-        _binding.wGender.setText(worker.gender)
+        _binding.wGender.setSelection(gIndex)
         _binding.wNationality.setText(worker.nationality)
         _binding.wNationalId.setText(worker.nationalId)
         _binding.wHireDate.setText(worker.hireDate)
-        _binding.wDepartment.setText(worker.department)
+        _binding.wDepartment.setSelection(hIndex)
 
         Glide.with(requireContext())
             .load(Uri.parse(worker.imguri))
@@ -107,6 +223,55 @@ class WDetailsFragment : Fragment() {
             .into(_binding.wImg)
 
         setHasOptionsMenu(true)
+
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+
+        val parsedDobDate = simpleDateFormat.parse(_binding.wDob.text.toString())
+
+        val dCalendar = Calendar.getInstance()
+
+        if (parsedDobDate != null) {
+            dCalendar.time = parsedDobDate
+        }
+
+//        dCalendar.set(parsedDobDate?.year ?: Calendar.YEAR,
+//                    parsedDobDate?.month ?: Calendar.MONTH,
+//                     parsedDobDate?.day ?: Calendar.DAY_OF_MONTH
+//        )
+
+        _binding.wDobPicker.setOnClickListener {
+            dobPickerDialog = DatePickerDialog(
+                requireContext(),
+                R.style.Theme_AppCompat_DayNight_Dialog_Alert,
+                this,
+                dCalendar.get(Calendar.YEAR),
+                dCalendar.get(Calendar.MONTH),
+                dCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dobPickerDialog.show()
+        }
+
+        val parsedHdDate = simpleDateFormat.parse(_binding.wHireDate.text.toString())
+
+        val hdCalendar = Calendar.getInstance()
+
+        if (parsedHdDate != null) {
+            hdCalendar.time = parsedHdDate
+        }
+
+        _binding.wHireDatePicker.setOnClickListener {
+            hdPickerDialog = DatePickerDialog(
+                requireContext(),
+                R.style.Theme_AppCompat_DayNight_Dialog_Alert,
+                this,
+                hdCalendar.get(Calendar.YEAR),
+                hdCalendar.get(Calendar.MONTH),
+                hdCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+
+            hdPickerDialog.show()
+        }
 
         _binding.applyEditFab.setOnClickListener {
             val editedWorker = getEditedWorker()
@@ -118,17 +283,23 @@ class WDetailsFragment : Fragment() {
             _binding.wSalary.isFocusable= false
             _binding.wCountry.isFocusable = false
             _binding.wCity.isFocusable = false
-            _binding.wGender.isFocusable = false
+            _binding.wGender.isEnabled = false
             _binding.wNationality.isFocusable = false
             _binding.wNationalId.isFocusable = false
             _binding.wHireDate.isFocusable = false
-            _binding.wDepartment.isFocusable = false
+            _binding.wDepartment.isEnabled = false
             _binding.changeImgBtn.isEnabled = false
+            _binding.wDobPicker.isEnabled = false
+            _binding.wHireDatePicker.isEnabled = false
 //            _binding.changeImgBtn.isFocusable = false
 //            _binding.changeImgBtn.isClickable = false
             _binding.applyEditFab.isClickable = false
             _binding.applyEditFab.visibility = View.INVISIBLE
             _binding.changeImgBtn.setBackgroundColor(resources.getColor(R.color.gray))
+            _binding.wDobPicker.setBackgroundColor(resources.getColor(R.color.gray))
+            _binding.wHireDatePicker.setBackgroundColor(resources.getColor(R.color.gray))
+            _binding.wGender.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
+            _binding.wDepartment.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.gray)
             Toast.makeText(requireContext(), "Successfully Edited", Toast.LENGTH_LONG).show()
         }
 
@@ -187,11 +358,11 @@ class WDetailsFragment : Fragment() {
         val pNumber = _binding.wPn.text.toString()
         val country = _binding.wCountry.text.toString()
         val city = _binding.wCity.text.toString()
-        val gender = _binding.wGender.text.toString()
+        val gender = _binding.wGender.selectedItem.toString()
         val nationality = _binding.wNationality.text.toString()
         val nationalId = _binding.wNationalId.text.toString()
         val hireDate = _binding.wHireDate.text.toString()
-        val department = _binding.wDepartment.text.toString()
+        val department = _binding.wDepartment.selectedItem.toString()
         val map = mutableMapOf<String, Any>()
         if (fName.isNotEmpty()) {
             map["fname"] = fName
@@ -382,22 +553,28 @@ class WDetailsFragment : Fragment() {
                 if (a.type == "main" || a.type == "edit") {
                     _binding.wFName.isFocusableInTouchMode = true;
                     _binding.wLName.isFocusableInTouchMode = true;
-                    _binding.wDob.isFocusableInTouchMode = true;
+//                    _binding.wDob.isFocusableInTouchMode = true;
                     _binding.wPn.isFocusableInTouchMode = true;
                     _binding.wSalary.isFocusableInTouchMode= true;
                     _binding.wCountry.isFocusableInTouchMode= true;
                     _binding.wCity.isFocusableInTouchMode= true;
-                    _binding.wGender.isFocusableInTouchMode= true;
+                    _binding.wGender.isEnabled= true;
                     _binding.wNationality.isFocusableInTouchMode= true;
                     _binding.wNationalId.isFocusableInTouchMode= true;
-                    _binding.wHireDate.isFocusableInTouchMode= true;
-                    _binding.wDepartment.isFocusableInTouchMode= true;
+//                    _binding.wHireDate.isFocusableInTouchMode= true;
+                    _binding.wDepartment.isEnabled= true;
                     _binding.changeImgBtn.isEnabled= true;
+                    _binding.wDobPicker.isEnabled= true;
+                    _binding.wHireDatePicker.isEnabled= true;
 //                    _binding.changeImgBtn.isFocusableInTouchMode= true;
 //                    _binding.changeImgBtn.isClickable = true;
                     _binding.applyEditFab.isClickable = true;
                     _binding.applyEditFab.visibility = View.VISIBLE;
                     _binding.changeImgBtn.setBackgroundColor(resources.getColor(R.color.teal_200))
+                    _binding.wDobPicker.setBackgroundColor(resources.getColor(R.color.teal_200))
+                    _binding.wHireDatePicker.setBackgroundColor(resources.getColor(R.color.teal_200))
+                    _binding.wGender.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
+                    _binding.wDepartment.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.purple_200)
                 } else {
                     Toast.makeText(requireContext(), "Access Denied", Toast.LENGTH_LONG).show()
                 }
@@ -407,6 +584,26 @@ class WDetailsFragment : Fragment() {
         }
 
         return true
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        if (view == dobPickerDialog.datePicker) {
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
+            val formattedDateString = SimpleDateFormat("dd/MM/yyyy").format(selectedDate.time)
+
+            _binding.wDob.setText(formattedDateString)
+
+        } else if (view == hdPickerDialog.datePicker) {
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
+            val formattedDateString = SimpleDateFormat("dd/MM/yyyy").format(selectedDate.time)
+
+            _binding.wHireDate.setText(formattedDateString)
+        }
     }
 
 }
